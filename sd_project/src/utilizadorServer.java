@@ -6,7 +6,7 @@ public class utilizadorServer {
 
     public static void main(String[] args) {
 		int port=DEFAULT_PORT;
-		Utilizador utilizador = new Utilizador();
+		utilizador utilizador = new utilizador();
 		
 		// Cria um ServerSocket e associa-o a porta especificada na variavel port
 	

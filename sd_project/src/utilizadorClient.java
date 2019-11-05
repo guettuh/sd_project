@@ -67,4 +67,5 @@ public class utilizadorClient{
 			System.out.println("Erro ao comunicar com o servidor: "+e);
 			System.exit(1);
 		}
+    }
 }

@@ -40,11 +40,9 @@ public class GetUtilizadorRequestHandler extends Thread {
 			String metodo = tokens.nextToken();
 			if (metodo.equals("get")) {
 				response = "101\n";
-                String idRegisto = tokens.nextToken();
-                String nickName = tokens.nextToken();
-				Vector<String> resultado = mensagens.getPresences();
-				response += ipList.size() + "\n";
-				for (Iterator<String> it = ipList.iterator(); it.hasNext();){
+                                String idRegisto = tokens.nextToken();
+                                String nickName = tokens.nextToken();
+				for (Iterator<String> it = .iterator(); it.hasNext();){
 					String next = it.next(); 
                     response += next + ";";
 				}
