@@ -6,6 +6,7 @@ import java.util.*;
 public class mensagens{
 
     //hashtable para guardar os pedidos (consultaMensagens) e as mensagens
+    //mapeia chaves para valores. Qualquer objeto não nulo pode ser usado como uma chave ou como um valor.
     
     private static Hashtable<String,  consultaMensagens> mensagem = new Hashtable<String,  consultaMensagens>();
     private static Hashtable<String, String> mensagens = new Hashtable<String, String>();
@@ -27,6 +28,16 @@ public class mensagens{
 
     
     //metodo para guardar as mensagens
+    //syncronized para não ser mais que uma thread a aceder ao código dentro desse bloco.
+    
+    ////////////////////////////////////////
+    /// Because synchronization does hurt concurrency, 
+    /// you don't want to synchronize any more code than is necessary to protect your data.
+    /// So if the scope of a method is more than needed, you can reduce the 
+    /// scope of the synchronized part to something less than a full method—to just a block.
+    /////////////
+    
+    
     public void guardarMensagem (String idRegisto, String mensagem){
 		synchronized (this){
 			mensagens.put (idRegisto,mensagem);
@@ -34,8 +45,9 @@ public class mensagens{
     }
     
     //vetor consultaMensagem com dados dos pedidos
-    //o porque um vetor The Vector class implements a growable array of objects. Like an array, it contains components that can be accessed 
-    //using an integer index
+    //o porque um vetor: A classe Vector implementa uma variedade crescente de objetos. Como um array (uma matriz), contém componentes que podem ser acedidos
+    // usando um índice inteiro, consultamos pela enumeração
+    
     public Vector<consultaMensagens> getConsultaMensagens(String update) {
 		Vector<consultaMensagens> result = new Vector<consultaMensagens>();
 		for (Enumeration<consultaMensagens> e = mensagem.elements();e.hasMoreElements(); ){
@@ -46,7 +58,7 @@ public class mensagens{
 	}
     
     //metodo para imprimir as mensagens
-    //pega no hashtable, converte para strng com o metodo toString
+    //pega no hashtable, retorna uma representação do objeto em forma de String com o metodo toString
     //imprime o conteudo no objeto resultado e retorna o valor 
     public String printMensagens (){
         
@@ -68,8 +80,9 @@ public class mensagens{
 		return resultado;
 	}}
 
-   //Classe que guarda as informações de cada client que connecta com o servidor, nomeadamente
-        //o seu id e seu nick, o pedido de mensagem que envia, e a ultima atualização conhecida
+    //Classe que guarda as informações de cada client que connecta com o servidor, nomeadamente
+    //o seu id e seu nick, o pedido de mensagem que envia, e a ultimo update/registo conhecida
+    
     class consultaMensagens {
  
             private String nickname;

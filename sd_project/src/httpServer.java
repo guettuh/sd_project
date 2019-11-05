@@ -3,6 +3,9 @@ import java.io.*;
 import java.util.*;
 
 //implementa o run para a execução do serverSocket
+//A interface Runnable deve ser implementada por qualquer classe cujas instâncias sejam executadas por um thread. 
+//A classe deve definir um método sem argumentos chamado run.
+
 public class httpServer implements Runnable{
     static int DEFAULT_PORT=8081;
     public int port;

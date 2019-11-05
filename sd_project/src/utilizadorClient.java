@@ -52,7 +52,7 @@ public class utilizadorClient{
 			//cria uma PrintStream para escrever para o socket
 			PrintWriter out = new PrintWriter(ligacao.getOutputStream());
 
-			// constroi o pedido para enviar ao servidor
+			//constroi o pedido para enviar ao servidor
 			String request = "get" + " " + args[0];
 			//teste
 			System.out.println(request);
