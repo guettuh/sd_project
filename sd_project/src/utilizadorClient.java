@@ -1,13 +1,19 @@
 import java.net.*;
 import java.io.*;
 
-public class utilizadorClient{
-    static int DEFAULT_PORT=8081;
-    static final String DEFAULT_HOST="127.0.0.1";
+//acesso via linha de comandos, recebe um argumento "nickName" e liga-se ao servidor
+//não faz mais nada
+//tem que devolver um id do servidor e terminar ligação. FALTA FAZER
+//cópia e adaptação da ficha anterior
 
+public class utilizadorClient{
+    static int porta=8081;
+    static final String host="127.0.0.1";
+
+    
     public static void main(String[] args) {
-		String servidor=DEFAULT_HOST;
-		int porto=DEFAULT_PORT;
+	String servidor=host;
+	int porto=porta;
         String contador = "0";
 
         if (args.length != 1) {

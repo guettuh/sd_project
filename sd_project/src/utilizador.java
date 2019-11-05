@@ -2,6 +2,10 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
+//criei o utilizador, acho que esta a mais.
+//guarda um idRegisto e um nickName, ambos do tipo string
+//guarda numa Hashtable a lista de utilizadores
+
 public class utilizador{
 
     private String idRegisto;

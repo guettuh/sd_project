@@ -2,19 +2,20 @@ import java.net.*;
 import java.io.*;
 import java.util.*;
 
-public class GetUtilizadorRequestHandler extends Thread {
+public class GetMensagensRequestHandler extends Thread {
 	Socket ligacao;
-	utilizador utilizador;
+	mensagens mensagem;
 	BufferedReader in;
-    PrintWriter out;
-    
+        PrintWriter out;
+        BufferedReader fr;
     //adaptar caminho para windows ou mac 
     //windows leva duas barras "\\" em susbtiuilçao da normal "/" 
 	static final String ficheiro ="/Users/filipemanso/Desktop/Exemplos_códigos_java/paginaHttp.html";
+  
 
-    public GetUtilizadorRequestHandler(Socket ligacao, utilizador utilizador) {
+    public GetMensagensRequestHandler(Socket ligacao, mensagens mensagem) {
 		this.ligacao = ligacao;
-		this.utilizador = utilizador;
+		this.mensagem = mensagem;
 		try
 		{	
 		this.in = new BufferedReader (new InputStreamReader(ligacao.getInputStream()));
@@ -28,9 +29,9 @@ public class GetUtilizadorRequestHandler extends Thread {
 			System.exit(1);
 		}
     }
-    public void run() {                
+    /*public void run() {                
 		try {
-			System.out.println("Aceitou ligacao de cliente no endereco " + ligacao.getInetAddress() + " na porta " + ligacao.getPort());
+			System.out.println("Aceitou ligacao de cliente no endereco ");
 			
 			String response;
 			String msg = in.readLine();
@@ -60,5 +61,5 @@ public class GetUtilizadorRequestHandler extends Thread {
 			System.out.println("Erro na execucao do servidor: " + e);
 			System.exit(1);
 		}
-	}
+	}*/
 }
