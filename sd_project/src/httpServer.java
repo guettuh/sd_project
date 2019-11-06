@@ -8,11 +8,11 @@ import java.util.*;
 
 public class httpServer implements Runnable{
     static int DEFAULT_PORT=8081;
-    public int port;
+    public int porta;
     private mensagens mensagem;
     
     public httpServer(int port, mensagens mensagem){
-		this.port=port;
+		this.porta=port;
                 this.mensagem=mensagem;
     }
 		
@@ -21,14 +21,14 @@ public class httpServer implements Runnable{
 		ServerSocket servidor = null; 
 	
 		try	{ 
-			servidor = new ServerSocket(port);
+			servidor = new ServerSocket(porta);
 		} catch (Exception e) { 
 			System.err.println("erro ao criar socket servidor...");
 			e.printStackTrace();
 			System.exit(-1);
 		}
 
-		System.out.println("Servidor a' espera de ligacoes no porto " + port);
+		System.out.println("Servidor a' espera de ligacoes no porto " + porta);
 		
 		while(true) {
 			try {
@@ -49,23 +49,12 @@ public class httpServer implements Runnable{
         //ligação ao servidor
             int port=DEFAULT_PORT;
             mensagens mensagem = new mensagens();
-		try {
-			ServerSocket serverConnect = new ServerSocket(port);
-			System.out.println("Server started.\nListening for connections on port : " + port + " ...\n");
-			
-			// we listen until user halts server execution
-			while (true) {
-				httpServer myServer = new httpServer(port, mensagem);
-				
-				// create dedicated thread to manage the client connection
-				Thread thread = new Thread(myServer);
-				thread.start();
+		
+			httpServer server = new httpServer(port, mensagem);
+                        new Thread(server).start(); 
 			}
-			
-		} catch (IOException e) {
-			System.err.println("Server Connection error : " + e.getMessage());
-		}
+		
                 
 	}
-}
+
 	
