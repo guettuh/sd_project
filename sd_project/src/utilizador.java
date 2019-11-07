@@ -8,18 +8,19 @@ import java.util.*;
 
 public class utilizador{
 
-    private String idRegisto;
+    private int idRegisto;
     private String nickName;
+    private static Hashtable<String, utilizador> listaUtilizadores = new Hashtable<String, utilizador>();
     
         public utilizador(){
         }
 
-        public utilizador(String idRegisto, String nickName){
-            this.idRegisto=idRegisto;
+        public utilizador(int idRegisto, String nickName){
+            this.idRegisto=listaUtilizadores.size()+1;
             this.nickName=nickName;
         }
 
-    public String getIdRegisto() {
+    public int getIdRegisto() {
         return idRegisto;
     }
 
@@ -28,7 +29,7 @@ public class utilizador{
     }
 
     //por incremental
-    public void setIdRegisto(String idRegisto) {
+    public void setIdRegisto(int idRegisto) {
         this.idRegisto = idRegisto;
     }
 
@@ -36,8 +37,7 @@ public class utilizador{
         this.nickName = nickName;
     }
 
-	private static Hashtable<String, utilizador> listaUtilizadores = new Hashtable<String, utilizador>();
-
+	
     public static void setListaUtilizadores(Hashtable<String, utilizador> listaUtilizadores) {
         utilizador.listaUtilizadores = listaUtilizadores;
     }

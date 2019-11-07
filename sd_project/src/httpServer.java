@@ -9,9 +9,9 @@ import java.util.*;
 public class httpServer implements Runnable{
     static int DEFAULT_PORT=8081;
     public int porta;
-    private mensagens mensagem;
+    private pedidos mensagem;
     
-    public httpServer(int port, mensagens mensagem){
+    public httpServer(int port, pedidos mensagem){
 		this.porta=port;
                 this.mensagem=mensagem;
     }
@@ -35,7 +35,7 @@ public class httpServer implements Runnable{
 				
 				Socket ligacao = servidor.accept();
 				
-				GetMensagensRequestHandler t = new GetMensagensRequestHandler(ligacao, mensagem);
+				GetPedidosRequestHandler t = new GetPedidosRequestHandler(ligacao, mensagem);
 				t.start();
 				
 			} catch (IOException e) {
@@ -48,7 +48,7 @@ public class httpServer implements Runnable{
         public static void main(String[] args) {
         //ligação ao servidor
             int port=DEFAULT_PORT;
-            mensagens mensagem = new mensagens();
+            pedidos mensagem = new pedidos();
 		
 			httpServer server = new httpServer(port, mensagem);
                         new Thread(server).start(); 
