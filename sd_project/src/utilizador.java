@@ -6,19 +6,19 @@ import java.util.*;
 //guarda um idRegisto e um nickName, ambos do tipo string
 //guarda numa Hashtable a lista de utilizadores
 
-public class utilizador{
+public class utilizador {
 
     private int idRegisto;
     private String nickName;
-    private static Hashtable<String, utilizador> listaUtilizadores = new Hashtable<String, utilizador>();
-    
-        public utilizador(){
-        }
+    private static ArrayList<utilizador> listaUtilizadores = new ArrayList<utilizador>();
 
-        public utilizador(int idRegisto, String nickName){
-            this.idRegisto=listaUtilizadores.size()+1;
-            this.nickName=nickName;
-        }
+    public utilizador() {
+    }
+
+    public utilizador(String nickName) {
+        this.idRegisto = listaUtilizadores.size() + 1;
+        this.nickName = nickName;
+    }
 
     public int getIdRegisto() {
         return idRegisto;
@@ -28,7 +28,7 @@ public class utilizador{
         return nickName;
     }
 
-    //por incremental
+    // por incremental
     public void setIdRegisto(int idRegisto) {
         this.idRegisto = idRegisto;
     }
@@ -37,16 +37,12 @@ public class utilizador{
         this.nickName = nickName;
     }
 
-	
-    public static void setListaUtilizadores(Hashtable<String, utilizador> listaUtilizadores) {
+    public static void setListaUtilizadores(ArrayList<utilizador> listaUtilizadores) {
         utilizador.listaUtilizadores = listaUtilizadores;
     }
 
-    public static Hashtable<String, utilizador> getListaUtilizadores() {
+    public static ArrayList<utilizador> getListaUtilizadores() {
         return listaUtilizadores;
     }
-	
-	
 
-    
 }
