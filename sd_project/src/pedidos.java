@@ -8,21 +8,21 @@ public class pedidos{
     //hashtable para guardar os pedidos (Mensagem) e as pedidos
     //mapeia chaves para valores. Qualquer objeto não nulo pode ser usado como uma chave ou como um valor.
     
-    private static Hashtable<String,  Mensagem> pedido = new Hashtable<String,  Mensagem>();
+    private static Hashtable<String,  Mensagem> mensagems = new Hashtable<String,  Mensagem>();
     private static Hashtable<String, String> mensagens = new Hashtable<String, String>();
     private static int update = 1;
     private static int idRegisto;
     private static String mensagem;
 
 
-    public static Hashtable<String, Mensagem> getPedido() {
-        return pedido;
+    public static Hashtable<String, Mensagem> getMensagems() {
+        return mensagems;
     }
 
 
-    public static Hashtable<String, String> getMensagens() {
+    /*public static Hashtable<String, String> getUtilizadores() {
         return mensagens;
-    }
+    }*/
 
 
     public static int getUpdate() {
@@ -34,8 +34,10 @@ public class pedidos{
     
     public void setMensagem( int idRegisto, String nickName, String mensagem, String update){
         synchronized(this){
+            //solução avançada com esta verificação if
             if(mensagens.containsKey(nickName)){
-               Mensagem novaMessagem = pedido.get(nickName);
+               Mensagem novaMessagem = mensagems.get(nickName);
+              
                if(update.equals(String.valueOf(this.update))){
                    this.idRegisto = idRegisto;
                    this.mensagem = mensagem;
@@ -53,7 +55,7 @@ public class pedidos{
                    this.update = this.update+1;
                }
             
-                pedido.put(nickName, novaMessagem);
+                mensagems.put(nickName, novaMessagem);
                    novaMessagem.setIdRegisto(idRegisto);
                    novaMessagem.setMensagem(mensagem);
                    novaMessagem.setUpdate(this.update);
@@ -61,25 +63,40 @@ public class pedidos{
         }
     }
     
-    public Vector<String> getMensagem(String nickName, String update){
+    
+    //o objeto "nova menssagem" é o mensagems de consulta de mensagem. retorna a lista 
+    public Vector<String> getPresencas(String nickName, String update){
         synchronized(this){
-            if(mensagens.containsKey(nickName)){
-               Mensagem novaMessagem = pedido.get(nickName);
+            /*if(mensagens.containsKey(nickName)){
+               Mensagem novaMessagem = mensagems.get(nickName);
                novaMessagem.setIdRegisto(idRegisto);
                novaMessagem.setMensagem(mensagem);
                }else{
                Mensagem novaMessagem = new Mensagem(nickName);
-               pedido.put(nickName, novaMessagem);
+               mensagems.put(nickName, novaMessagem);
                novaMessagem.setIdRegisto(idRegisto);
                novaMessagem.setMensagem(mensagem);
             }
             Vector<String> relatorio = new Vector<String> ();
             relatorio.add(this.mensagem);
+            relatorio.add(nickName);
 
             return relatorio;
+            */
             
-        }
-    }
+			if (mensagems.containsKey(nickName)) {
+				Mensagem newMensagem = mensagems.get(nickName);
+				mensagems.put(nickName,newMensagem);
+			}
+			else {
+				Mensagem newMensagem = new Mensagem(nickName);
+				mensagems.put(nickName,newMensagem);
+			}
+		}
+		return getUtilizadores();
+	}
+        
+    
     
     //metodo para guardar as mensagens
     //syncronized para não ser mais que uma thread a aceder ao código dentro desse bloco.
@@ -102,11 +119,11 @@ public class pedidos{
     //o porque um vetor: A classe Vector implementa uma variedade crescente de objetos. Como um array (uma matriz), contém componentes que podem ser acedidos
     // usando um índice inteiro, consultamos pela enumeração
     
-    public Vector<Mensagem> getPedidos (String update) {
-		Vector<Mensagem> result = new Vector<Mensagem>();
-		for (Enumeration<Mensagem> e = pedido.elements();e.hasMoreElements(); ){
+    public Vector<String> getUtilizadores () {
+		Vector<String> result = new Vector<String>();
+		for (Enumeration<Mensagem> e = mensagems.elements();e.hasMoreElements(); ){
 			Mensagem element = e.nextElement();
-			result.add(element);
+			result.add(element.getNickname());   
 		}
 		return  result;
 	}
@@ -135,7 +152,7 @@ public class pedidos{
 	}}
 
     //Classe que guarda as informações de cada client que connecta com o servidor, nomeadamente
-    //o seu id e seu nick, o pedido de pedido que envia, e a ultimo update/registo conhecida
+    //o seu id e seu nick, o mensagems de mensagems que envia, e a ultimo update/registo conhecida
     
     class Mensagem {
  
@@ -144,16 +161,16 @@ public class pedidos{
             private String mensagem;
             private int update;
         
-            public Mensagem(int idRegisto, String nickname, String mensagem, int update) {
+            public Mensagem(int idRegisto, String nickName, String mensagem, int update) {
         
-                this.nickname= nickname;
+                this.nickname= nickName;
                 this.idRegisto= idRegisto;
                 this.mensagem=mensagem;
                 this.update=update;
             }
 
-            public Mensagem(String nickname) {
-		this.nickname = nickname;
+            public Mensagem(String nickName) {
+		this.nickname = nickName;
 		this.update=0;
 	}
         public int getUpdate() {
@@ -170,8 +187,8 @@ public class pedidos{
             public String getNickname(){
                 return this.nickname;
             }
-            public void setNickname(String nickname){
-                this.nickname=nickname;
+            public void setNickname(String nickName){
+                this.nickname=nickName;
             }
             public int getIdRegisto(int idRegisto){
                 return this.idRegisto;

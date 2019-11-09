@@ -31,7 +31,7 @@ public class GetPedidosRequestHandler extends Thread {
                             System.exit(1);
                     }
     }
-    public void run() {                
+    /*public void run() {                
 		try {
 			System.out.println("Aceitou ligacao de cliente no endereco ");
 			
@@ -47,11 +47,13 @@ public class GetPedidosRequestHandler extends Thread {
 				response = "101\n";
                                 String nickName =tokens.nextToken();
                                 String update = tokens.nextToken();
-                                Vector<String> result = pedidos.getMensagens(nickName, update);
-				for (Iterator<String> it = result.iterator(); it.hasNext();){
+                                Vector<String> ipList = pedidos.getMensagens(update);
+				response += ipList.size() + "\n";
+				for (Iterator<String> it = ipList.iterator(); it.hasNext();){
 					String next = it.next(); 
-                    response += next + ";";
+					response += next + ";"; 
 				}
+                                
 				System.out.println(response);
 				out.println(response);
 			}
@@ -66,5 +68,5 @@ public class GetPedidosRequestHandler extends Thread {
 			System.out.println("Erro na execucao do servidor: " + e);
 			System.exit(1);
 		}
-	}
+	}*/
 }
