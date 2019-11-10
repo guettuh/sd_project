@@ -41,23 +41,13 @@ public class MessageRequest {
     }
     
     public String imprimirUsers (){
-		String mensagensX = listUsers.toString();
-		mensagensX=mensagensX.substring(1,mensagensX.length()-1);
-		String resultado="";
-		if (mensagensX.length()<3){
-			return resultado;
-		}
-		else {
-
-		String[] mensagens= mensagensX.split(",");
-			System.out.println(mensagens.length);
-
-		for (int x = 0; x<20 && x<mensagens.length;x++){
-			resultado+=mensagens[x].replace("=",":");
+		String resultado=new String();
+		for (int x = 0; x<listUsers.size();x++){
+			resultado=listUsers.get(x).getNickName();
 			resultado+="<br>";
 		}
 		return resultado;
-	}}
+	}
     
     public void saveUser(String nickName){
         User user = new User(nickName);
@@ -65,23 +55,13 @@ public class MessageRequest {
         
     }
     public String imprimirMensagens (){
-		String mensagensX = messages.toString();
-		mensagensX=mensagensX.substring(1,mensagensX.length()-1);
-		String resultado="";
-		if (mensagensX.length()<3){
-			return resultado;
+		String mensagens =new String();
+		for (int x = 0; x<messages.size();x++){
+			mensagens=messages.get(x).getNickName();
+			mensagens+="<br>";
 		}
-		else {
-
-		String[] mensagens= mensagensX.split(",");
-			System.out.println(mensagens.length);
-
-		for (int x = 0; x<20 && x<mensagens.length;x++){
-			resultado+=mensagens[x].replace("=",":");
-			resultado+="<br>";
-		}
-		return resultado;
-	}}
+		return mensagens;
+	}
     
     public class Message{
         private String nickName;

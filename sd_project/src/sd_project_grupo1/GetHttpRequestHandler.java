@@ -66,24 +66,38 @@ public class GetHttpRequestHandler extends Thread {
                     out.println("<!doctype html>\n" + "\n" + "<html lang=\"en\">\n" + "<head>\n"
                             + "    <meta charset=\"utf-8\">\n" + "\n" + "    <title>Chat</title>\n" + "\n"
                             + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
-                            + "</head>\n" + "\n" + "<body>");
-                    out.println("        </div>\n" + "    </div>\n" + "    <div class=\"border\"rows=4 cols=\"10\">\n"
+                            + "</head>\n" + "\n" 
+                            + "<body>");
+                    out.println("        </div>\n" 
+                            + "    </div>\n" 
+                            + "    <div class=\"border\"rows=4 cols=\"10\">\n"
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                            + "                <div class=\"card-body\">\n" + message.imprimirUsers()+"                </div>\n"
-                            + "            </div>\n" + "\n");
-                    out.println("             <br>\n" + "        </div>\n" + "        <div class=\"form\">\n"
-                            + "           <div class=\"form-group\" >\n" + "            <form method=\"post\" >\n"
-                            + "                NickName: <br> <input name=\"nome\" rows=\"1\"></input>\n" + "<br>\n"
-                            + "<br>\n" + "<label for=\"mensagem\">Tell us your story:</label>\n" + "<br>\n"
-                            + "                <textarea disabled name=\"mensagem\" rows=\"2\"></textarea>\n" + "<br>\n"
+                            + "                <div class=\"card-body\">\n" + message.imprimirUsers()
+                            + "                </div>\n"
+                            + "            </div>\n" 
+                            + "\n");
+                    out.println("             <br>\n" 
+                            + "        </div>\n" 
+                            
+                            + "        <div class=\"form\">\n"
+                            + "           <div class=\"form-group\" >\n" 
+                            + "            <form method=\"post\" >\n"
+                            + "                NickName: <br> <input name=\"nome\" rows=\"1\"></input>\n" 
+                            + "<br>\n"
+                            + "<br>\n" 
                             + "                <button type=\"submit\" value=\"mensagem\" class=\"btn btn-primary\">Submeter</button>\n"
-                            + "            </form>\n" + "        </div>\n" + "        </div>\n" + "    </div>\n"
-                            + "</div>\n" + "\n"
+                            + "            </form>\n" 
+                            + "        </div>\n" 
+                            + "        </div>\n" 
+                            + "    </div>\n"
+                            + "</div>\n" 
+                            + "\n"
                             + "<script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>\n"
                             + "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js\" integrity=\"sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh\" crossorigin=\"anonymous\"></script>\n"
                             + "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js\" integrity=\"sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ\" crossorigin=\"anonymous\"></script>\n"
-                            + "</body>\n" + "</html>");
+                            + "</body>\n" 
+                            + "</html>");
                 
                 } 
                 
@@ -93,21 +107,30 @@ public class GetHttpRequestHandler extends Thread {
                 in.read(corpo,0,contLength);
                 String corpoS = new String(corpo);
                 System.out.println(corpoS);
-                int idz = corpoS.length();
+                int idz = corpoS.indexOf("&");
 
 
+                if(corpoS.contains("&")){
+                    String nomeX = corpoS.substring(0,idz);
+                    int idn = nomeX.indexOf("=");
+                    String nome = nomeX.substring(idn+1,nomeX.length());
 
-                String nomeX = corpoS.substring(0,idz);
-                int idn = nomeX.indexOf("=");
-                String nome = nomeX.substring(idn+1,nomeX.length());
-
-                /*String mensagemX = corpoS.substring(idz+1,corpoS.length());
-                int idm = mensagemX.indexOf("=");
-                String mensagem = mensagemX.substring(idm+1,mensagemX.length());
-*/
-                
+                    String mensagemX = corpoS.substring(idz+1,corpoS.length());
+                    int idm = mensagemX.indexOf("=");
+                    String mensagem = mensagemX.substring(idm+1,mensagemX.length());
+                    
+                    message.saveMessage(nome, mensagem);
+                } else {
+                    String nomeX = corpoS.substring(0,corpoS.length());
+                    int idn = nomeX.indexOf("=");
+                    String nome = nomeX.substring(idn+1,nomeX.length());
+                    
                     message.saveUser(nome);
-                    //message.saveMessage(nome, mensagem);
+                }   
+                
+                
+                    
+                  
                     
                     response = "101\n";
                     System.out.println("work");
@@ -115,21 +138,46 @@ public class GetHttpRequestHandler extends Thread {
                     out.println("HTTP/1.1 200 OK");
                     out.println("Content-Type: text/html");
                     out.println("\r\n");
-                    out.println("<!doctype html>\n" + "\n" + "<html lang=\"en\">\n" + "<head>\n"
-                            + "    <meta charset=\"utf-8\">\n" + "\n" + "    <title>Chat</title>\n" + "\n"
+                    out.println("<!doctype html>\n" 
+                            + "\n" 
+                            + "<html lang=\"en\">\n" 
+                            + "<head>\n"
+                            + "    <meta charset=\"utf-8\">\n" 
+                            + "\n" 
+                            + "    <title>Chat</title>\n" 
+                            + "\n"
                             + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
-                            + "</head>\n" + "\n" + "<body>");
-                    out.println("        </div>\n" + "    </div>\n" + "    <div class=\"border\"rows=4 cols=\"10\">\n"
+                            + "</head>\n" 
+                            + "\n" 
+                            + "<body>");
+                    out.println("        </div>\n" 
+                            + "    </div>\n" 
+                            + "    <div class=\"border\"rows=4 cols=\"10\">\n"
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
                             + "                <div class=\"card-body\">\n" + message.imprimirUsers()+
                             "                </div>\n"
-                            + "            </div>\n" + "\n");
-                    out.println("             <br>\n" + "        </div>\n" + "        <div class=\"form\">\n"
-                            + "           <div class=\"form-group\" >\n" + "            <form method=\"post\" >\n"
-                            + "                NickName: <br> <input name=\"nome\" rows=\"1\"></input>\n" + "<br>\n"
-                            + "<br>\n" + "<label for=\"mensagem\">Tell us your story:</label>\n" + "<br>\n"
-                            + "                <textarea disabled name=\"mensagem\" rows=\"2\"></textarea>\n" + "<br>\n"
+                            + "            </div>\n" 
+                                    + "\n");
+                    out.println("             <br>\n" 
+                            + "        </div>\n" 
+                            + "        <div class=\"\">\n"
+                            + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
+                            + "                <div class=\"card-body\">\n" + message.imprimirMensagens()
+                            + "                </div>\n"
+                            + "            </div>\n" 
+                            + "\n");
+                    out.println("             <br>\n" 
+                            + "        </div>\n"
+                            + "        <div class=\"form\">\n"
+                            + "           <div class=\"form-group\" >\n" 
+                            + "            <form method=\"post\" >\n"
+                            + "                NickName: <br> <input name=\"nome\" rows=\"1\"></input>\n" 
+                            + "<br>\n"
+                            + "<br>\n" 
+                            + "<label for=\"mensagem\">Tell us your story:</label>\n" 
+                            + "<br>\n"
+                            + "                <textarea name=\"mensagem\" rows=\"2\"></textarea>\n" + "<br>\n"
                             + "                <button type=\"submit\" value=\"mensagem\" class=\"btn btn-primary\">Submeter</button>\n"
                             + "            </form>\n" + "        </div>\n" + "        </div>\n" + "    </div>\n"
                             + "</div>\n" + "\n"
@@ -137,7 +185,8 @@ public class GetHttpRequestHandler extends Thread {
                             + "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js\" integrity=\"sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh\" crossorigin=\"anonymous\"></script>\n"
                             + "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js\" integrity=\"sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ\" crossorigin=\"anonymous\"></script>\n"
                             + "</body>\n" + "</html>");
-
+                
+                
                 } else {
                     out.println("201:method not found");
 
