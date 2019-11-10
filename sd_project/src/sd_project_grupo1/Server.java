@@ -15,7 +15,7 @@ import java.net.Socket;
 public class Server implements Runnable {
     
     static final int DEFAULT_PORT = 8081;
-    static final String DEFAULT_FILE = "index.html";
+    static final String DEFAULT_FILE = "paginahttp.html";
     static final String FILE_NOT_FOUND = "404.html";
     public int port;
     private final MessageRequest message;
@@ -33,7 +33,7 @@ public class Server implements Runnable {
         
         try{
             server = new ServerSocket(port);
-            System.out.println("Servidor Iniciado! Á escuta na porta"+port);
+            System.out.println("Servidor Iniciado! Á escuta na porta "+port);
             
             //Aguarda que seja estabelecida uma conexão. QUando isso acontece cria um socket - connection
             while(true){
@@ -42,7 +42,7 @@ public class Server implements Runnable {
                     GetHttpRequestHandler thread = new GetHttpRequestHandler(connection, message);
                     thread.start();
                 }catch (IOException e){
-                    System.err.println("Erro na sua execução do Socket Servidor!"+e);
+                    System.err.println("Erro na execução do Socket Servidor!"+e);
                     System.exit(1);
                 }
             }

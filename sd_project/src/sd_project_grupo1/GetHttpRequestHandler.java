@@ -49,7 +49,26 @@ public class GetHttpRequestHandler extends Thread{
             StringTokenizer tokens = new StringTokenizer(msg);
             String method = tokens.nextToken();
             
-            if(method.equals("get")){
+             if(method != null){
+                response = msg;
+                //String  user = tokens.nextToken();
+                //ArrayList<String> listUsers = users.getUsers(user);
+                //response+= listUsers.size() + "\n";
+       out.println("Estou aqui");
+               // out.println(user);
+            System.out.println(response);
+                out.println(response);
+                out.println("Estou aqui");
+                connection.close();
+            }else{
+                out.println("201:method not found "+method.toString());
+                out.flush();
+                in.close();
+                connection.close();
+                
+            }
+         
+          /*  if(method.equals("get")){
                 response = "101\n";
                 String  user = tokens.nextToken();
                 ArrayList<String> listUsers = users.getUsers(user);
@@ -63,7 +82,7 @@ public class GetHttpRequestHandler extends Thread{
                 in.close();
                 connection.close();
                 
-            }
+            }*/
         } catch (IOException e) {
             System.err.println("Ocorreu um erro na execução do servidor:"+e);
             System.exit(1);
