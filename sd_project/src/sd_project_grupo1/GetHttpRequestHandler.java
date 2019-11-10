@@ -121,7 +121,7 @@ public class GetHttpRequestHandler extends Thread {
                     
                     message.saveMessage(nickname, messageUser);
                 } else {
-                    String findNickName = submition.substring(0,index);
+                    String findNickName = submition.substring(0,submition.length());
                     int idn = findNickName.indexOf("=");
                     String nickname = findNickName.substring(idn+1,findNickName.length());
 

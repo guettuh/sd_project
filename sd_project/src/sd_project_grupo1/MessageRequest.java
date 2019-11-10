@@ -50,15 +50,7 @@ public class MessageRequest {
 		return result;
 	}
     
-    public ArrayList<String> getUsersString(){
-       ArrayList<String> listUsersString = new ArrayList<String>();
-       
-       for(int i=0; i<listUsers.size(); i++ ){
-            String user = listUsers.get(i).toString();
-            listUsersString.add(user);
-       }
-        return listUsersString;
-   }
+    
     public void saveUser(String nickName){
         User user = new User(nickName);
         listUsers.add(user);
