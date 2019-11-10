@@ -9,7 +9,7 @@ public class pedidos {
     // chave ou como um valor.
 
     private static Hashtable<String, Mensagem> mensagems = new Hashtable<String, Mensagem>();
-    private static ArrayList<utilizador> listaUtilizador = new ArrayList<utilizador>();
+    private static Hashtable<String, utilizador> listaUtilizador = new Hashtable<String, utilizador>();
     private static int idMensagem = 0;
     private static int idRegisto;
     private static String mensagem;
@@ -18,10 +18,11 @@ public class pedidos {
         return mensagems;
     }
 
-    /*
-     * public static Hashtable<String, String> getUtilizadores() { return mensagens;
-     * }
-     */
+    
+    public static Hashtable<String, utilizador> getUtilizadores() { 
+        return listaUtilizador;
+    }
+     
 
     public static int getIdMensagem() {
         return idMensagem;
@@ -45,39 +46,41 @@ public class pedidos {
         }
     }
 
-    // o objeto "nova menssagem" é o mensagems de consulta de mensagem. retorna a
-    // lista
-    public int guardarUtilizador(String nickName) {
+  
+    public void guardarUtilizador(String nickName) {
+         synchronized (this) {
         utilizador utilizador = new utilizador(nickName);
-        listaUtilizador.add(utilizador);
-        return idRegisto;
+        listaUtilizador.put(String.valueOf(utilizador.getIdRegisto()), utilizador);
     }
-
-    // metodo para guardar as mensagens
-    // syncronized para não ser mais que uma thread a aceder ao código dentro desse
-    // bloco.
+    }
 
     ////////////////////////////////////////
     /// Because synchronization does hurt concurrency,
     /// you don't want to synchronize any more code than is necessary to protect
-    //////////////////////////////////////// your data.
+    /// your data.
     /// So if the scope of a method is more than needed, you can reduce the
     /// scope of the synchronized part to something less than a full method—to just
-    //////////////////////////////////////// a block.
+    /// a block.
     /////////////
 
-    // vetor consultaMensagem com dados dos pedidos
-    // o porque um vetor: A classe Vector implementa uma variedade crescente de
-    // objetos. Como um array (uma matriz), contém componentes que podem ser
-    // acedidos
-    // usando um índice inteiro, consultamos pela enumeração
 
-    /*
-     * public Vector<String> getUtilizadores () { Vector<String> result = new
-     * Vector<String>(); for (Enumeration<Mensagem> e =
-     * mensagems.elements();e.hasMoreElements(); ){ Mensagem element =
-     * e.nextElement(); result.add(element.getNickname()); } return result; }
-     */
+    public Vector<Mensagem> getMensagens(String idMensagem) {
+        Vector<Mensagem> result = new Vector<Mensagem>();
+        for (Enumeration<Mensagem> e = mensagems.elements(); e.hasMoreElements();) {
+            Mensagem element = e.nextElement();
+            result.add(element);
+        }
+        return result;
+    }
+
+    public Vector<utilizador> getUtilizador(String idRegisto) {
+        Vector<utilizador> result = new Vector<utilizador>();
+        for (Enumeration<utilizador> e = listaUtilizador.elements(); e.hasMoreElements();) {
+            utilizador element = e.nextElement();
+            result.add(element);
+        }
+        return result;
+    }
 
     // metodo para imprimir as pedidos
     // pega no hashtable, retorna uma representação do objeto em forma de String com
@@ -147,5 +150,37 @@ public class pedidos {
         public void setMensagem(String mensagem) {
             this.mensagem = mensagem;
         }
+    }
+
+    class utilizador {
+
+        private int idRegisto;
+        private String nickName;
+
+        public utilizador() {
+        }
+
+        public utilizador(String nickName) {
+            this.idRegisto = listaUtilizador.size() + 1;
+            this.nickName = nickName;
+        }
+
+        public int getIdRegisto() {
+            return idRegisto;
+        }
+
+        public String getNickName() {
+            return nickName;
+        }
+
+        // por incremental
+        public void setIdRegisto(int idRegisto) {
+            this.idRegisto = listaUtilizador.size() + 1;
+        }
+
+        public void setNickName(String nickName) {
+            this.nickName = nickName;
+        }
+
     }
 }
