@@ -11,6 +11,7 @@ public class MessageRequest {
     private static final Hashtable<String, Message> messages = new Hashtable<String, Message>(); 
     private static final ArrayList<User> listUsers = new ArrayList<User>();
     private static final int iDMessage = 0;
+    private User users;
     private static int iDRegister;
     private static String message;
     
@@ -49,6 +50,15 @@ public class MessageRequest {
 		return result;
 	}
     
+    public ArrayList<String> getUsersString(){
+       ArrayList<String> listUsersString = new ArrayList<String>();
+       
+       for(int i=0; i<listUsers.size(); i++ ){
+            String user = listUsers.get(i).toString();
+            listUsersString.add(user);
+       }
+        return listUsersString;
+   }
     public void saveUser(String nickName){
         User user = new User(nickName);
         listUsers.add(user);

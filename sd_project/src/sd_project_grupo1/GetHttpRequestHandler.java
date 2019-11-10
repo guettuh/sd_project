@@ -36,17 +36,17 @@ public class GetHttpRequestHandler extends Thread {
                     + connection.getPort());
 
             String response;
-            //msg = mensagem do Cliente
+            //msg = message do Cliente
             String msg = in.readLine();
             StringBuilder builder = new StringBuilder();
             String line = msg;
-            int contLength=0;
+            int length=0;
             do {
                 System.out.println(line);
                 if (line.equals("")){ break;}
                 if (line.contains("Content-Length")){
                     int idx = line.indexOf(":");
-                    contLength = Integer.parseInt(line.substring(idx+2,line.length()));
+                    length = Integer.parseInt(line.substring(idx+2,line.length()));
                 }
                 builder.append(line);
                 line = in.readLine();
@@ -73,7 +73,7 @@ public class GetHttpRequestHandler extends Thread {
                             + "    <div class=\"border\"rows=4 cols=\"10\">\n"
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                            + "                <div class=\"card-body\">\n" + message.printUsers()
+                            + "                <div class=\"card-body\">\n" 
                             + "                </div>\n"
                             + "            </div>\n" 
                             + "\n");
@@ -103,29 +103,29 @@ public class GetHttpRequestHandler extends Thread {
                 
                 else if (msg.equals("POST / HTTP/1.1")) {
                     
-                    char[] corpo = new char[contLength];
-                in.read(corpo,0,contLength);
-                String corpoS = new String(corpo);
-                System.out.println(corpoS);
-                int idz = corpoS.indexOf("&");
+                char[] body = new char[length];
+                in.read(body,0,length);
+                String submition = new String(body);
+                System.out.println(submition);
+                int index = submition.indexOf("&");
 
 
-                if(corpoS.contains("&")){
-                    String nomeX = corpoS.substring(0,idz);
-                    int idn = nomeX.indexOf("=");
-                    String nome = nomeX.substring(idn+1,nomeX.length());
+                if(submition.contains("&")){
+                    String findNickName = submition.substring(0,index);
+                    int idn = findNickName.indexOf("=");
+                    String nickname = findNickName.substring(idn+1,findNickName.length());
 
-                    String mensagemX = corpoS.substring(idz+1,corpoS.length());
-                    int idm = mensagemX.indexOf("=");
-                    String mensagem = mensagemX.substring(idm+1,mensagemX.length());
+                    String findMessage = submition.substring(index+1,submition.length());
+                    int idm = findMessage.indexOf("=");
+                    String messageUser = findMessage.substring(idm+1,findMessage.length());
                     
-                    message.saveMessage(nome, mensagem);
+                    message.saveMessage(nickname, messageUser);
                 } else {
-                    String nomeX = corpoS.substring(0,corpoS.length());
-                    int idn = nomeX.indexOf("=");
-                    String nome = nomeX.substring(idn+1,nomeX.length());
-                    
-                    message.saveUser(nome);
+                    String findNickName = submition.substring(0,index);
+                    int idn = findNickName.indexOf("=");
+                    String nickname = findNickName.substring(idn+1,findNickName.length());
+
+                    message.saveUser(nickname);
                 }   
                 
                 
@@ -192,7 +192,7 @@ public class GetHttpRequestHandler extends Thread {
 
                 }
 
-                System.out.println("from client: " + builder);
+                //System.out.println("from client: " + builder);
                 // Write a sentence after reading.
                 out.flush();
                 in.close();
