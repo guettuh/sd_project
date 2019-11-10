@@ -40,13 +40,13 @@ public class MessageRequest {
         
     }
     
-    public String imprimirUsers (){
-		String resultado=new String();
-		for (int x = 0; x<listUsers.size();x++){
-			resultado=listUsers.get(x).getNickName();
-			resultado+="<br>";
+    public String printUsers (){
+		String result=new String();
+		for (int i = 0; i<listUsers.size();i++){
+			result=listUsers.get(i).getNickName();
+			result+="<br>";
 		}
-		return resultado;
+		return result;
 	}
     
     public void saveUser(String nickName){
@@ -54,10 +54,10 @@ public class MessageRequest {
         listUsers.add(user);
         
     }
-    public String imprimirMensagens (){
+    public String printMessages (){
 		String mensagens =new String();
-		for (int x = 0; x<messages.size();x++){
-			mensagens=messages.get(x).getNickName();
+		for (int i = 0; i<messages.size();i++){
+			mensagens=messages.get(i).getNickName();
 			mensagens+="<br>";
 		}
 		return mensagens;

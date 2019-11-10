@@ -73,7 +73,7 @@ public class GetHttpRequestHandler extends Thread {
                             + "    <div class=\"border\"rows=4 cols=\"10\">\n"
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                            + "                <div class=\"card-body\">\n" + message.imprimirUsers()
+                            + "                <div class=\"card-body\">\n" + message.printUsers()
                             + "                </div>\n"
                             + "            </div>\n" 
                             + "\n");
@@ -155,7 +155,7 @@ public class GetHttpRequestHandler extends Thread {
                             + "    <div class=\"border\"rows=4 cols=\"10\">\n"
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                            + "                <div class=\"card-body\">\n" + message.imprimirUsers()+
+                            + "                <div class=\"card-body\">\n" + message.printUsers()+
                             "                </div>\n"
                             + "            </div>\n" 
                                     + "\n");
@@ -163,7 +163,7 @@ public class GetHttpRequestHandler extends Thread {
                             + "        </div>\n" 
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                            + "                <div class=\"card-body\">\n" + message.imprimirMensagens()
+                            + "                <div class=\"card-body\">\n" + message.printMessages()
                             + "                </div>\n"
                             + "            </div>\n" 
                             + "\n");
