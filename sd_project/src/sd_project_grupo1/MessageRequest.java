@@ -4,6 +4,9 @@ package sd_project_grupo1;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 // chave ou como um valor.
 
@@ -18,6 +21,7 @@ public class MessageRequest {
     public static Hashtable<String, Message> getMessage(){
         return messageshash;
     }
+    
     
     public static int getIDMessage(){
         return iDMessage;
@@ -66,7 +70,7 @@ public class MessageRequest {
         listUsers.add(user);
         
     }
-    public String printMessages (){
+    public String printMessages( ){
        
 		/*int mensagens = 0;
                 String texto = " ";
@@ -77,8 +81,14 @@ public class MessageRequest {
                         
 		}
 		return texto;*/
-                
-                String mensagensString = messageshash.toString();
+    String result ="";
+    for(Map.Entry m:messageshash.entrySet()){  
+       
+    
+    result += "<br>"+ m.getKey()+"<br>"+m.getValue()+"<br>";
+  }  
+
+               /* String mensagensString = messageshash.toString();
 		mensagensString = mensagensString.substring(1,mensagensString.length()-1);
 		String result="";
                 String[] mensagens= mensagensString.split(",");
@@ -87,8 +97,9 @@ public class MessageRequest {
 		for (int x = 0; x<20 && x<mensagens.length;x++){
 			result =mensagens[x].replace("=",":");
 			mensagensString+="<br>";
-		}
+		}*/
                 return result;
+  
 	}
     
     
@@ -107,12 +118,10 @@ public class MessageRequest {
         public Message(String nickName){
             this.nickName = nickName;
             this.IDMessage = 0;
-            System.err.println("Tem que colocar uma mensagem");
         }
        
         public Message(){
             this.IDMessage = 0;
-            System.err.println("Tem que colocar um nickname e uma mensagem");
         }
         
         public int getIDMessage(){

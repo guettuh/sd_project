@@ -12,7 +12,7 @@ public class GetHttpRequestHandler extends Thread {
     BufferedReader in;
     PrintWriter out;
     BufferedReader fr;
-    static final String ficheiro = "/Users/filipemanso/Desktop/Exemplos_códigos_java/paginaHttp.html";
+    static final String ficheiro = "/Users/melodymonteiro/NetBeansProjects/sd_project_grupo/sd_project/src/src/paginahttp.html";
 
 
     GetHttpRequestHandler(Socket connection, MessageRequest message) {
