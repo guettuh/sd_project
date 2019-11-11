@@ -12,6 +12,8 @@ public class GetHttpRequestHandler extends Thread {
     BufferedReader in;
     PrintWriter out;
     BufferedReader fr;
+    String findNickName = null;
+    User user;
     //static final String ficheiro = "/Users/melodymonteiro/NetBeansProjects/sd_project_grupo/sd_project/src/src/paginahttp.html";
 
 
@@ -108,35 +110,24 @@ public class GetHttpRequestHandler extends Thread {
                 String submition = new String(body);
                 System.out.println(submition);
                 int index = submition.indexOf("&");
-
-
-                if(submition.contains("&")){
-                  if(!submition.contains(" ")){
-                    String findNickName = submition.substring(0,index);
-                    int idn = findNickName.indexOf("=");
-                    String nickname = findNickName.substring(idn+1,findNickName.length());
-
-                    String findMessage = submition.substring(index+1,submition.length());
-                    int idm = findMessage.indexOf("=");
-                    String messageUser = findMessage.substring(idm+1,findMessage.length());
                 
-                    //message.saveUser(nickname);
-                    message.saveMessage(nickname, messageUser);
-                 
-                  } else {
-                    String findNickName = submition.substring(0,submition.length());
+                
+                if(submition.contains("nome=")){
+                    findNickName = submition.substring(0,submition.length());
                     int idn = findNickName.indexOf("=");
                     String nickname = findNickName.substring(idn+1,findNickName.length());
-
-                    message.saveUser(nickname);
-                  }
-                } else {
-                    String findNickName = submition.substring(0,submition.length());
-                    int idn = findNickName.indexOf("=");
-                    String nickname = findNickName.substring(idn+1,findNickName.length());
-
-                    message.saveUser(nickname);
-                }   
+                    user=new User(nickname);
+                    message.saveUser(user); 
+                } 
+                else if(submition.contains("mensagem=")){
+                
+                String findMessage = submition.substring(0, submition.length());
+                int idm = findMessage.indexOf("=");
+                String messageUser = findMessage.substring(idm+1,findMessage.length());
+                
+               
+                message.saveMessage(user, messageUser);
+                }
                 
                 
                     
@@ -162,16 +153,16 @@ public class GetHttpRequestHandler extends Thread {
                             + "<body>");
                     out.println("        </div>\n" 
                             + "    </div>\n" 
-                            + "    <div class=\"border\"rows=4 cols=\"10\">\n"
+                            + "    <div class=\"col 2 border\"rows=4 cols=\"4\">\n"
                             + "        <div class=\"\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                            + "                <div class=\"card-body\">\n" + message.printUsers()+
+                            + "                <div class=\"card-body\">\n" + message.printUsers() +
                             "                </div>\n"
                             + "            </div>\n" 
                                     + "\n");
                     out.println("             <br>\n" 
                             + "        </div>\n" 
-                            + "        <div class=\"\">\n"
+                            + "        <div class=\" col-8 border\"rows=4 cols=\"3\">\n"
                             + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
                             + "                <div class=\"card-body\">\n" + message.printMessages()
                             + "                </div>\n"
@@ -182,8 +173,9 @@ public class GetHttpRequestHandler extends Thread {
                             + "        <div class=\"form\">\n"
                             + "           <div class=\"form-group\" >\n" 
                             + "            <form method=\"post\" >\n"
-                            + "                NickName: <br> <input name=\"nome\" rows=\"1\"></input>\n" 
+                            + "                NickName: \n" + user.getNickName()
                             + "<br>\n"
+                            + "                ID de Registo: \n" 
                             + "<br>\n" 
                             + "<label for=\"mensagem\">Tell us your story:</label>\n" 
                             + "<br>\n"

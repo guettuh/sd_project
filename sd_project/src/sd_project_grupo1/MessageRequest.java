@@ -31,21 +31,21 @@ public class MessageRequest {
     //método para guardar as mensagens
     //syncronized para não ser mais que uma thread a aceder ao código dentro desse bloco
     
-    public void saveMessage(String nickName, String message){
+    public void saveMessage(User user, String message){
         synchronized(this){
-            if(!listUsers.contains(nickName)){
-                User newUser = new User(nickName);
-                listUsers.add(newUser);
+            if(!listUsers.contains(user)){
+                saveUser(user);
+                System.out.println(listUsers.indexOf(user));
                 
-                Message newMessage = new Message(nickName);
+                Message newMessage = new Message(user.getNickName());
                 newMessage.setMessage(message);
                 newMessage.setIDMessage(this.IDMensagem + 1);
-                messageshash.put(nickName, newMessage);
-            }else if(listUsers.contains(nickName)){
-                Message newMessage = new Message(nickName);
+                messageshash.put(user.getNickName(), newMessage);
+            }else if(listUsers.contains(user)){
+                Message newMessage = new Message(user.getNickName());
                 newMessage.setMessage(message);
                 newMessage.setIDMessage(this.IDMensagem + 1);
-                messageshash.put(nickName, newMessage);
+                messageshash.put(user.getNickName(), newMessage);
                 
             }else{
                 System.out.println("Registe-se Primeiro");
@@ -58,17 +58,19 @@ public class MessageRequest {
     public String printUsers (){
 		String result=new String("");
 		for (int i = 0; i<listUsers.size();i++){
-			result+=listUsers.get(i).getNickName();
-			result+="<br>";
+			result += " - " + listUsers.get(i).getNickName();
+			result += "<br>";
 		}
 		return result;
 	}
     
     
-    public void saveUser(String nickName){
-        if(!listUsers.contains(nickName)){
-            User user = new User(nickName);
+    public void saveUser(User newUser){
+        if(!listUsers.contains(newUser)){
+            System.out.println("Não existe utilizador");
+            User user = newUser;
             listUsers.add(user);
+            System.out.println(listUsers.indexOf(user));
         }else{
             System.out.println("Já existe utilizador");
         }
@@ -88,7 +90,7 @@ public class MessageRequest {
     for(Map.Entry<String, Message> entry :messageshash.entrySet()){  
        
     
-    result += "<br>"+ entry.getKey().toString()+"<br>"+entry.getValue().getMessage()+"<br>";
+    result += "<br>"+ entry.getKey().toString()+"<br>"+entry.getValue().getMessage().replace("+", " ")+"<br>";
   }  
 
                /* String mensagensString = messageshash.toString();
