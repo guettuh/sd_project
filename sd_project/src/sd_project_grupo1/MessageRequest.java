@@ -3,6 +3,7 @@ package sd_project_grupo1;
 // mapeia chaves para valores. Qualquer objeto não nulo pode ser usado como uma
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,16 +12,42 @@ import java.util.Set;
 // chave ou como um valor.
 
 public class MessageRequest {
-    private static final Hashtable<String, Message> messageshash = new Hashtable<String, Message>(); 
-    private static final ArrayList<User> listUsers = new ArrayList<User>();
-    private static final int iDMessage = 0;
+    private static final HashMap<String, Message> messageshash = new HashMap<String, Message>(); 
+    private static final HashMap<String,User> listUsers = new HashMap<String,User>();
+    private static final int iDMessage = 1;
     private User users;
     private static int iDRegister;
     private static String message;
-    
-    public static Hashtable<String, Message> getMessage(){
+
+    public static HashMap<String, Message> getMessageshash() {
         return messageshash;
     }
+
+    public static HashMap<String, User> getListUsers() {
+        return listUsers;
+    }
+
+    public static int getiDMessage() {
+        return iDMessage;
+    }
+
+    public User getUsers() {
+        return users;
+    }
+
+    public static int getiDRegister() {
+        return iDRegister;
+    }
+
+    public static String getMessage() {
+        return message;
+    }
+
+    public int getIDMensagem() {
+        return IDMensagem;
+    }
+    
+    
     
     
     public static int getIDMessage(){
@@ -28,85 +55,65 @@ public class MessageRequest {
     }
     private int IDMensagem;
     
+    
+    
+    public String printUsers (){
+		String result=new String("");
+		for (String name: listUsers.keySet()){
+                    String key = name.toString();
+                    String value = listUsers.get(name).getNickName().toString();
+                    result += key + " - " + value;
+                    result += "<br>";
+                    }
+			
+		
+		return result;
+	}
+    
+    
     //método para guardar as mensagens
     //syncronized para não ser mais que uma thread a aceder ao código dentro desse bloco
-    
+    public void saveUser(User newUser){
+        if(!listUsers.containsValue(newUser)){
+            System.out.println("Não existe utilizador");
+            User user = newUser;
+            listUsers.put(String.valueOf(listUsers.size() + 1), user);
+            System.out.println(listUsers.containsValue(user) + "Criado");
+        }else{
+            System.out.println("Já existe utilizador");
+        }
+    }
     public void saveMessage(User user, String message){
         synchronized(this){
-            if(!listUsers.contains(user)){
-                saveUser(user);
-                System.out.println(listUsers.indexOf(user));
-                
+            if(!listUsers.containsValue(user)){
                 Message newMessage = new Message(user.getNickName());
                 newMessage.setMessage(message);
-                newMessage.setIDMessage(this.IDMensagem + 1);
-                messageshash.put(user.getNickName(), newMessage);
-            }else if(listUsers.contains(user)){
-                Message newMessage = new Message(user.getNickName());
-                newMessage.setMessage(message);
-                newMessage.setIDMessage(this.IDMensagem + 1);
-                messageshash.put(user.getNickName(), newMessage);
-                
-            }else{
+                newMessage.setIDMessage(this.IDMensagem);
+                messageshash.put((String.valueOf(this.IDMensagem)), newMessage);
+                System.out.println("o hash tem "+messageshash.size()+ " ocupados");
+                IDMensagem+=1;
+            }else if(listUsers.containsValue(user)){
                 System.out.println("Registe-se Primeiro");
                 //Colocar pop-up
             }
         }
         
     }
+    public String printMessages( ){
+    String result ="";
     
-    public String printUsers (){
-		String result=new String("");
-		for (int i = 0; i<listUsers.size();i++){
-			result += " - " + listUsers.get(i).getNickName();
-			result += "<br>";
-		}
+		for (String nickName: messageshash.keySet()){
+                    String key = nickName.toString();
+                    String user = messageshash.get(key).getNickName().toString();
+                    String value = messageshash.get(key).getMessage().toString().replace("+", " ");
+                    result += user + " : " + value;
+                    result += "<br>";
+                    }
+			
+		
 		return result;
 	}
-    
-    
-    public void saveUser(User newUser){
-        if(!listUsers.contains(newUser)){
-            System.out.println("Não existe utilizador");
-            User user = newUser;
-            listUsers.add(user);
-            System.out.println(listUsers.indexOf(user));
-        }else{
-            System.out.println("Já existe utilizador");
-        }
-    }
-    public String printMessages( ){
-       
-		/*int mensagens = 0;
-                String texto = " ";
-		for (int i = 0; i<messageshash.size();i++){
-			texto = messageshash.elements().nextElement().getNickName().toUpperCase() + ": ";
-                        texto += messageshash.elements().nextElement().getMessage().toLowerCase()  +  ".";
-			texto += "<br>";
-                        
-		}
-		return texto;*/
-    String result ="";
-    for(Map.Entry<String, Message> entry :messageshash.entrySet()){  
-       
-    
-    result += "<br>"+ entry.getKey().toString()+"<br>"+entry.getValue().getMessage().replace("+", " ")+"<br>";
-  }  
-
-               /* String mensagensString = messageshash.toString();
-		mensagensString = mensagensString.substring(1,mensagensString.length()-1);
-		String result="";
-                String[] mensagens= mensagensString.split(",");
-			System.out.println(mensagens.length);
-
-		for (int x = 0; x<20 && x<mensagens.length;x++){
-			result =mensagens[x].replace("=",":");
-			mensagensString+="<br>";
-		}*/
-                return result;
-  
-	}
-    
+                
     
     class Message{
         private String nickName;

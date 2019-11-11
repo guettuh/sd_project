@@ -5,13 +5,13 @@
  */
 package sd_project_grupo1;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class User {
     private int IDRegisto;
     private String nickName;
-    private static ArrayList<User> listUsers = new ArrayList<User>();
+    private  HashMap<String, User> listUsers = new HashMap<String, User>();
     
    
 
@@ -20,13 +20,19 @@ public class User {
         
     }
 
-   public ArrayList<User> getUsers() {
+   public HashMap<String, User> getUsers() {
     return   listUsers;
    }
    
-   public void saveUser(String nickName){
-        User user = new User(nickName);
-        listUsers.add(user);
+   public void saveUser(User newUser){
+        if(!listUsers.containsValue(newUser)){
+            System.out.println("Não existe utilizador");
+            User user = newUser;
+            listUsers.put(String.valueOf(listUsers.size() + 1), user);
+            System.out.println(listUsers.containsValue(user));
+        }else{
+            System.out.println("Já existe utilizador");
+        }
     }
  
    public ArrayList<String> getUsersString(){
@@ -46,8 +52,10 @@ public class User {
         this.nickName = nickName;
     }
 
-    public static void setListUsers(ArrayList<User> listUsers) {
-        User.listUsers = listUsers;
+    
+
+    public int getIDRegisto(User user) {
+        return listUsers.get(user).hashCode();
     }
     
     public String getNickName(){

@@ -8,12 +8,12 @@ import java.util.*;
 public class GetHttpRequestHandler extends Thread {
     Socket connection;
     MessageRequest message;
-    User users;
+    User user;
     BufferedReader in;
     PrintWriter out;
     BufferedReader fr;
     String findNickName = null;
-    User user;
+ 
     //static final String ficheiro = "/Users/melodymonteiro/NetBeansProjects/sd_project_grupo/sd_project/src/src/paginahttp.html";
 
 
@@ -111,24 +111,29 @@ public class GetHttpRequestHandler extends Thread {
                 System.out.println(submition);
                 int index = submition.indexOf("&");
                 
-                
-                if(submition.contains("nome=")){
-                    findNickName = submition.substring(0,submition.length());
+                findNickName = submition.substring(0,submition.length());
                     int idn = findNickName.indexOf("=");
                     String nickname = findNickName.substring(idn+1,findNickName.length());
-                    user=new User(nickname);
-                    message.saveUser(user); 
-                } 
-                else if(submition.contains("mensagem=")){
+                    
                 
-                String findMessage = submition.substring(0, submition.length());
+                    
+                if(submition.contains("nickname=") && submition.contains("mensagem=")){
+                
+                String findMessage = submition.substring(index, submition.length());
                 int idm = findMessage.indexOf("=");
                 String messageUser = findMessage.substring(idm+1,findMessage.length());
-                
-               
-                message.saveMessage(user, messageUser);
+                nickname = findNickName.substring(idn+1,index);
+                User user1=new User(nickname);
+                message.saveMessage(user1, messageUser);
+                }
+                else if(!submition.contains("messagem=")){
+                    
+                    User user1=new User(nickname);
+                    message.saveUser(user1); 
                 }
                 
+                
+               
                 
                     
                   
@@ -173,7 +178,7 @@ public class GetHttpRequestHandler extends Thread {
                             + "        <div class=\"form\">\n"
                             + "           <div class=\"form-group\" >\n" 
                             + "            <form method=\"post\" >\n"
-                            + "                NickName: \n" + user.getNickName()
+                            + "                NickName: <br> <input name=\"nickname\" value=\""+nickname+"\" rows=\"1\"></input>\n" 
                             + "<br>\n"
                             + "                ID de Registo: \n" 
                             + "<br>\n" 
