@@ -111,6 +111,7 @@ public class GetHttpRequestHandler extends Thread {
 
 
                 if(submition.contains("&")){
+                  if(!submition.contains(" ")){
                     String findNickName = submition.substring(0,index);
                     int idn = findNickName.indexOf("=");
                     String nickname = findNickName.substring(idn+1,findNickName.length());
@@ -118,8 +119,17 @@ public class GetHttpRequestHandler extends Thread {
                     String findMessage = submition.substring(index+1,submition.length());
                     int idm = findMessage.indexOf("=");
                     String messageUser = findMessage.substring(idm+1,findMessage.length());
-                    
+                
+                    message.saveUser(nickname);
                     message.saveMessage(nickname, messageUser);
+                 
+                  } else {
+                    String findNickName = submition.substring(0,submition.length());
+                    int idn = findNickName.indexOf("=");
+                    String nickname = findNickName.substring(idn+1,findNickName.length());
+
+                    message.saveUser(nickname);
+                  }
                 } else {
                     String findNickName = submition.substring(0,submition.length());
                     int idn = findNickName.indexOf("=");
@@ -198,7 +208,8 @@ public class GetHttpRequestHandler extends Thread {
                 in.close();
                 out.close();
                 connection.close();
-            
+                System.out.println("Terminou a ligacao!");
+                
         } catch (IOException e) {
             System.err.println("Ocorreu um erro na execução do servidor:" + e);
             System.exit(1);

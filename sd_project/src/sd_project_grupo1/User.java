@@ -17,7 +17,7 @@ public class User {
 
     public User(String nickName) {
         this.nickName = nickName;
-        this.IDRegisto = listUsers.size() +1;
+        
     }
 
    public ArrayList<User> getUsers() {
@@ -27,28 +27,8 @@ public class User {
    public void saveUser(String nickName){
         User user = new User(nickName);
         listUsers.add(user);
-        
     }
-   
-   public String imprimirUsers (){
-		String mensagensX = listUsers.toString();
-		mensagensX=mensagensX.substring(1,mensagensX.length()-1);
-		String resultado="";
-		if (mensagensX.length()<3){
-			return resultado;
-		}
-		else {
-
-		String[] mensagens= mensagensX.split(",");
-			System.out.println(mensagens.length);
-
-		for (int x = 0; x<20 && x<mensagens.length;x++){
-			resultado+=mensagens[x].replace("=",":");
-			resultado+="<br>";
-		}
-		return resultado;
-	}}
-
+ 
    public ArrayList<String> getUsersString(){
        ArrayList<String> listUsersString = new ArrayList<String>();
        
@@ -59,11 +39,15 @@ public class User {
         return listUsersString;
    }
    
-    ArrayList<String> getUsers(String user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
+    
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
-    public int getIDRegisto(){
-        return IDRegisto;
+
+    public static void setListUsers(ArrayList<User> listUsers) {
+        User.listUsers = listUsers;
     }
     
     public String getNickName(){

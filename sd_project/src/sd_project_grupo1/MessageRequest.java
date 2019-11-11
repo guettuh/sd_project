@@ -8,7 +8,7 @@ import java.util.Hashtable;
 // chave ou como um valor.
 
 public class MessageRequest {
-    private static final Hashtable<String, Message> messages = new Hashtable<String, Message>(); 
+    private static final Hashtable<String, Message> messageshash = new Hashtable<String, Message>(); 
     private static final ArrayList<User> listUsers = new ArrayList<User>();
     private static final int iDMessage = 0;
     private User users;
@@ -16,7 +16,7 @@ public class MessageRequest {
     private static String message;
     
     public static Hashtable<String, Message> getMessage(){
-        return messages;
+        return messageshash;
     }
     
     public static int getIDMessage(){
@@ -29,10 +29,20 @@ public class MessageRequest {
     
     public void saveMessage(String nickName, String message){
         synchronized(this){
-            if(listUsers.contains(nickName)){
-                Message newMessage = messages.get(nickName);
+            if(!listUsers.contains(nickName)){
+                User newUser = new User(nickName);
+                listUsers.add(newUser);
+                
+                Message newMessage = new Message(nickName);
                 newMessage.setMessage(message);
                 newMessage.setIDMessage(this.IDMensagem + 1);
+                messageshash.put(nickName, newMessage);
+            }else if(listUsers.contains(nickName)){
+                Message newMessage = new Message(nickName);
+                newMessage.setMessage(message);
+                newMessage.setIDMessage(this.IDMensagem + 1);
+                messageshash.put(nickName, newMessage);
+                
             }else{
                 System.out.println("Registe-se Primeiro");
                 //Colocar pop-up
@@ -57,15 +67,32 @@ public class MessageRequest {
         
     }
     public String printMessages (){
-		String mensagens =new String();
-		for (int i = 0; i<messages.size();i++){
-			mensagens=messages.get(i).getNickName();
-			mensagens+="<br>";
+       
+		/*int mensagens = 0;
+                String texto = " ";
+		for (int i = 0; i<messageshash.size();i++){
+			texto = messageshash.elements().nextElement().getNickName().toUpperCase() + ": ";
+                        texto += messageshash.elements().nextElement().getMessage().toLowerCase()  +  ".";
+			texto += "<br>";
+                        
 		}
-		return mensagens;
+		return texto;*/
+                
+                String mensagensString = messageshash.toString();
+		mensagensString = mensagensString.substring(1,mensagensString.length()-1);
+		String result="";
+                String[] mensagens= mensagensString.split(",");
+			System.out.println(mensagens.length);
+
+		for (int x = 0; x<20 && x<mensagens.length;x++){
+			result =mensagens[x].replace("=",":");
+			mensagensString+="<br>";
+		}
+                return result;
 	}
     
-    public class Message{
+    
+    class Message{
         private String nickName;
         private String message;
         private int IDMessage;
@@ -76,13 +103,13 @@ public class MessageRequest {
             this.message = message;
             this.IDMessage = iDMessage;
         }
-        
+
         public Message(String nickName){
             this.nickName = nickName;
             this.IDMessage = 0;
             System.err.println("Tem que colocar uma mensagem");
         }
-        
+       
         public Message(){
             this.IDMessage = 0;
             System.err.println("Tem que colocar um nickname e uma mensagem");
