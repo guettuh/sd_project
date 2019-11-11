@@ -56,9 +56,9 @@ public class MessageRequest {
     }
     
     public String printUsers (){
-		String result=new String();
+		String result=new String("");
 		for (int i = 0; i<listUsers.size();i++){
-			result=listUsers.get(i).getNickName();
+			result+=listUsers.get(i).getNickName();
 			result+="<br>";
 		}
 		return result;
@@ -66,9 +66,12 @@ public class MessageRequest {
     
     
     public void saveUser(String nickName){
-        User user = new User(nickName);
-        listUsers.add(user);
-        
+        if(!listUsers.contains(nickName)){
+            User user = new User(nickName);
+            listUsers.add(user);
+        }else{
+            System.out.println("Já existe utilizador");
+        }
     }
     public String printMessages( ){
        
@@ -82,10 +85,10 @@ public class MessageRequest {
 		}
 		return texto;*/
     String result ="";
-    for(Map.Entry m:messageshash.entrySet()){  
+    for(Map.Entry<String, Message> entry :messageshash.entrySet()){  
        
     
-    result += "<br>"+ m.getKey()+"<br>"+m.getValue()+"<br>";
+    result += "<br>"+ entry.getKey().toString()+"<br>"+entry.getValue().getMessage()+"<br>";
   }  
 
                /* String mensagensString = messageshash.toString();

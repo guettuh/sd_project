@@ -12,7 +12,7 @@ public class GetHttpRequestHandler extends Thread {
     BufferedReader in;
     PrintWriter out;
     BufferedReader fr;
-    static final String ficheiro = "/Users/melodymonteiro/NetBeansProjects/sd_project_grupo/sd_project/src/src/paginahttp.html";
+    //static final String ficheiro = "/Users/melodymonteiro/NetBeansProjects/sd_project_grupo/sd_project/src/src/paginahttp.html";
 
 
     GetHttpRequestHandler(Socket connection, MessageRequest message) {
@@ -22,7 +22,7 @@ public class GetHttpRequestHandler extends Thread {
         try {
             this.in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
             this.out = new PrintWriter(connection.getOutputStream());
-            this.fr =new BufferedReader (new FileReader(ficheiro));
+            //this.fr =new BufferedReader (new FileReader(ficheiro));
         } catch (IOException e) {
             System.err.println("Ocorreu um erro na execução do Servidor: " + e);
             System.exit(1);
@@ -120,7 +120,7 @@ public class GetHttpRequestHandler extends Thread {
                     int idm = findMessage.indexOf("=");
                     String messageUser = findMessage.substring(idm+1,findMessage.length());
                 
-                    message.saveUser(nickname);
+                    //message.saveUser(nickname);
                     message.saveMessage(nickname, messageUser);
                  
                   } else {
