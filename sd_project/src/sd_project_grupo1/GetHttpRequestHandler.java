@@ -110,6 +110,7 @@ public class GetHttpRequestHandler extends Thread {
 
                     User user1 = new User(nickname);
                     message.saveUser(user1);
+                  
                 }
 
                 response = "101\n";
@@ -134,7 +135,7 @@ public class GetHttpRequestHandler extends Thread {
                         + "                </div>\n" + "            </div>\n" + "\n");
                 out.println("             <br>\n" + "        </div>\n" + "        <div class=\"form\">\n"
                         + "           <div class=\"form-group\" >\n" + "            <form method=\"post\" >\n"
-                        + "                NickName: <br> <input name=\"nickname\" value=\"" + nickname
+                        + "                NickName: <br> <input disable name=\"nickname\" value=\"" + nickname
                         + "\" rows=\"1\"></input>\n" + "<br>\n" + "                ID de Registo: \n" + "<br>\n"
                         + "<label for=\"mensagem\">Tell us your story:</label>\n" + "<br>\n"
                         + "                <textarea name=\"mensagem\" rows=\"2\"></textarea>\n" + "<br>\n"

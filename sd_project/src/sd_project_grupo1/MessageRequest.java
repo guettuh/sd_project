@@ -31,11 +31,7 @@ public class MessageRequest {
         return users;
     }
 
-    public static int getiDRegister() {
-        return iDRegister;
-    }
-
-    public static String getMessage() {
+    static String getMessage() {
         return message;
     }
 
@@ -54,7 +50,7 @@ public class MessageRequest {
         for (String name : listUsers.keySet()) {
             String key = name.toString();
             String value = listUsers.get(name).getNickName().toString();
-            result += key + " - " + value;
+            result += "ID" + key + " :: user:" + value;
             result += "<br>";
         }
 
@@ -67,24 +63,26 @@ public class MessageRequest {
     public void saveUser(User newUser) {
         if (!listUsers.containsValue(newUser)) {
             System.out.println("Não existe utilizador");
-            User user = newUser;
-            listUsers.put(String.valueOf(listUsers.size() + 1), user);
-            System.out.println(listUsers.containsValue(user) + "Criado");
+            newUser.setIdRegisto(listUsers.size()+1);
+            listUsers.put(newUser.getNickName(), newUser );
+            System.out.println(" user " + newUser.getIdRegisto() + " Criado");
+            System.out.println(listUsers.size() + " lugares ocupados");
         } else {
             System.out.println("Já existe utilizador");
         }
     }
 
     public void saveMessage(User user, String message) {
+        String userNick = user.getNickName();
         synchronized (this) {
-            if (!listUsers.containsValue(user)) {
+            if (listUsers.containsKey(userNick)) {
                 Message newMessage = new Message(user.getNickName());
                 newMessage.setMessage(message);
                 newMessage.setIDMessage(this.IDMensagem);
                 messageshash.put((String.valueOf(this.IDMensagem)), newMessage);
-                System.out.println("o hash tem " + messageshash.size() + " ocupados");
+                System.out.println("o hashMap tem " + messageshash.size() + " lugares ocupados");
                 IDMensagem += 1;
-            } else if (listUsers.containsValue(user)) {
+            } else {
                 System.out.println("Registe-se Primeiro");
                 // Colocar pop-up
             }
