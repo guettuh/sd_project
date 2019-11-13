@@ -48,9 +48,9 @@ public class MessageRequest {
     public String printUsers() {
         String result = new String("");
         for (String name : listUsers.keySet()) {
-            String key = name.toString();
+            int key = listUsers.get(name).getIdRegisto();
             String value = listUsers.get(name).getNickName().toString();
-            result += "ID" + key + " :: user:" + value;
+            result += "ID: " + key + " :: user: " + value;
             result += "<br>";
         }
 
