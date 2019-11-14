@@ -95,15 +95,15 @@ public class GetHttpRequestHandler extends Thread {
                 int index = submition.indexOf("&");
 
                 findNickName = submition.substring(0, submition.length());
-                int idn = findNickName.indexOf("=");
-                String nickname = findNickName.substring(idn + 1, findNickName.length());
+                int idx1 = findNickName.indexOf("=");
+                String nickname = findNickName.substring(idx1 + 1, findNickName.length());
 
                 if (submition.contains("nickname=") && submition.contains("mensagem=")) {
 
                     String findMessage = submition.substring(index, submition.length());
-                    int idm = findMessage.indexOf("=");
-                    String messageUser = findMessage.substring(idm + 1, findMessage.length());
-                    nickname = findNickName.substring(idn + 1, index);
+                    int idx2 = findMessage.indexOf("=");
+                    String messageUser = findMessage.substring(idx2 + 1, findMessage.length());
+                    nickname = findNickName.substring(idx1 + 1, index);
                     User user1 = new User(nickname);
                     message.saveMessage(user1, messageUser);
                 } else if (!submition.contains("messagem=")) {

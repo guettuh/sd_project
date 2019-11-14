@@ -12,7 +12,6 @@ public class MessageRequest {
     private static final HashMap<String, User> listUsers = new HashMap<String, User>();
     private static final int iDMessage = 1;
     private User users;
-    private static int iDRegister;
     private static String message;
 
     public static HashMap<String, Message> getMessageshash() {
@@ -76,11 +75,11 @@ public class MessageRequest {
         String userNick = user.getNickName();
         synchronized (this) {
             if (listUsers.containsKey(userNick)) {
-                Message newMessage = new Message(user.getNickName());
+                Message newMessage = new Message(userNick);
                 newMessage.setMessage(message);
                 newMessage.setIDMessage(this.IDMensagem);
                 messageshash.put((String.valueOf(this.IDMensagem)), newMessage);
-                System.out.println("o hashMap tem " + messageshash.size() + " lugares ocupados");
+                System.out.println("O hashMap contém " + messageshash.size() + " registos.");
                 IDMensagem += 1;
             } else {
                 System.out.println("Registe-se Primeiro");
@@ -93,8 +92,8 @@ public class MessageRequest {
     public String printMessages() {
         String result = "";
 
-        for (String nickName : messageshash.keySet()) {
-            String key = nickName.toString();
+        for (String idMessage : messageshash.keySet()) {
+            String key = idMessage.toString();
             String user = messageshash.get(key).getNickName().toString();
             String value = messageshash.get(key).getMessage().toString().replace("+", " ");
             result += user + " : " + value;
