@@ -133,7 +133,6 @@ public class GetHttpRequestHandler extends Thread {
                         + " <div class=\"main\">\n"
                         +           "NickNames Registados:\n"
                         + "           <div class=\"row\">\n");
-                
                 out.println("               <div class=\" col-4 \"rows=3 cols=\"2\">\n"
                         + "                     <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
                         + "                        <div class=\"card-body\">\n" + message.printMessages()
