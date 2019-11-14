@@ -1,99 +1,153 @@
-package sd_project_grupo1; 
+package sd_project_grupo1;
 // hashtable para guardar os pedidos (Mensagem) e as pedidos
+
 // mapeia chaves para valores. Qualquer objeto não nulo pode ser usado como uma
 
-import java.util.ArrayList;
-import java.util.Hashtable;
+import java.io.IOException;
+import java.util.*;
+import javax.swing.*;
+
 
 // chave ou como um valor.
 
-public class MessageRequest {
-    private static final Hashtable<String, Message> messages = new Hashtable<String, Message>(); 
-    private static final ArrayList<User> listUsers = new ArrayList<User>();
-    private static final int iDMessage = 0;
-    private static int iDRegister;
+public class MessageRequest extends JFrame {
+    private static final HashMap<String, Message> messageshash = new HashMap<String, Message>();
+    private static final HashMap<String, User> listUsers = new HashMap<String, User>();
+    private static final int iDMessage = 1;
+    private User users;
     private static String message;
-    
-    public static Hashtable<String, Message> getMessage(){
-        return messages;
+
+    public static HashMap<String, Message> getMessageshash() {
+        return messageshash;
     }
-    
-    public static int getIDMessage(){
+
+    public static HashMap<String, User> getListUsers() {
+        return listUsers;
+    }
+
+    public static int getiDMessage() {
         return iDMessage;
     }
+
+    public User getUsers() {
+        return users;
+    }
+
+    static String getMessage() {
+        return message;
+    }
+
+    public int getIDMensagem() {
+        return IDMensagem;
+    }
+
+    public static int getIDMessage() {
+        return iDMessage;
+    }
+
     private int IDMensagem;
-    
-    //método para guardar as mensagens
-    //syncronized para não ser mais que uma thread a aceder ao código dentro desse bloco
-    
-    public void saveMessage(String nickName, String message){
-        synchronized(this){
-            if(listUsers.contains(nickName)){
-                Message newMessage = messages.get(nickName);
+
+    public String printUsers() {
+        String result = new String("");
+        for (String name : listUsers.keySet()) {
+            int key = listUsers.get(name).getIdRegisto();
+            String value = listUsers.get(name).getNickName().toString();
+            result += "ID: " + key + " :: user: " + value;
+            result += "<br>";
+        }
+
+        return result;
+    }
+
+    // método para guardar as mensagens
+    // syncronized para não ser mais que uma thread a aceder ao código dentro desse
+    // bloco
+    public void saveUser(User newUser) {
+        if (!listUsers.containsValue(newUser)) {
+            System.out.println("Não existe utilizador");
+            newUser.setIdRegisto(listUsers.size()+1);
+            listUsers.put(newUser.getNickName(), newUser );
+            System.out.println(" user " + newUser.getIdRegisto() + " Criado");
+            System.out.println(listUsers.size() + " utilizadores registados");
+        } else {
+            System.out.println("Já existe utilizador");
+        }
+    }
+
+    public void saveMessage(User user, String message) {
+        String userNick = user.getNickName();
+        synchronized (this) {
+            if (listUsers.containsKey(userNick)) {
+                Message newMessage = new Message(user.getNickName());
                 newMessage.setMessage(message);
-                newMessage.setIDMessage(this.IDMensagem + 1);
-            }else{
+                newMessage.setIDMessage(this.IDMensagem);
+                messageshash.put((String.valueOf(this.IDMensagem)), newMessage);
+                System.out.println("o hashMap tem " + messageshash.size() + " mensagens enviadas");
+                IDMensagem += 1;
+            } else {
                 System.out.println("Registe-se Primeiro");
-                //Colocar pop-up
             }
         }
-        
     }
-    
-    public int saveUser(String nickName){
-        User user = new User(nickName);
-        listUsers.add(user);
-        return iDRegister;
         
+
+    public String printMessages() {
+        String result = "";
+
+        for (String nickName : messageshash.keySet()) {
+            String key = nickName.toString();
+            String user = messageshash.get(key).getNickName().toString();
+            String value = messageshash.get(key).getMessage().toString().replace("+", " ");
+            result += user + " : " + value;
+            result += "<br>";
+        }
+
+        return result;
     }
-    
-    public class Message{
+
+    class Message {
         private String nickName;
         private String message;
         private int IDMessage;
-        
-        
-        public Message(String nickName, String message, int IDMessage){
+
+        public Message(String nickName, String message, int IDMessage) {
             this.nickName = nickName;
             this.message = message;
             this.IDMessage = iDMessage;
         }
-        
-        public Message(String nickName){
+
+        public Message(String nickName) {
             this.nickName = nickName;
             this.IDMessage = 0;
-            System.err.println("Tem que colocar uma mensagem");
         }
-        
-        public Message(){
+
+        public Message() {
             this.IDMessage = 0;
-            System.err.println("Tem que colocar um nickname e uma mensagem");
         }
-        
-        public int getIDMessage(){
+
+        public int getIDMessage() {
             return IDMessage;
         }
-    
 
         public void setMessage(String message) {
-            this.message= message;
+            this.message = message;
         }
 
         public void setIDMessage(int IDMessage) {
             this.IDMessage = IDMessage;
         }
-        
-        public String getNickName(){
+
+        public String getNickName() {
             return this.nickName;
         }
-        
-        public void setNickame(String nickName){
+
+        public void setNickame(String nickName) {
             this.nickName = nickName;
         }
-        
-        public String getMessage(){
+
+        public String getMessage() {
             return message;
         }
-    
+
     }
 }
