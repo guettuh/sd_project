@@ -10,8 +10,6 @@ import java.util.*;
 public class Server implements Runnable {
 
     static final int DEFAULT_PORT = 8081;
-    static final String DEFAULT_FILE = "index.html";
-    static final String FILE_NOT_FOUND = "404.html";
     public int port;
     private final MessageRequest message;
 
@@ -33,7 +31,7 @@ public class Server implements Runnable {
             e.printStackTrace();
             System.exit(-1);
         }
-        System.out.println("Servidor Iniciado! Á escuta na porta" + port);
+        System.out.println("Servidor Iniciado! Á escuta na porta " + port);
 
         // Aguarda que seja estabelecida uma conexão. QUando isso acontece cria um
         // socket - connection

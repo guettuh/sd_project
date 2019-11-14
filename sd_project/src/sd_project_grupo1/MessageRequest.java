@@ -3,16 +3,18 @@ package sd_project_grupo1;
 
 // mapeia chaves para valores. Qualquer objeto não nulo pode ser usado como uma
 
+import java.io.IOException;
 import java.util.*;
+import javax.swing.*;
+
 
 // chave ou como um valor.
 
-public class MessageRequest {
+public class MessageRequest extends JFrame {
     private static final HashMap<String, Message> messageshash = new HashMap<String, Message>();
     private static final HashMap<String, User> listUsers = new HashMap<String, User>();
     private static final int iDMessage = 1;
     private User users;
-    private static int iDRegister;
     private static String message;
 
     public static HashMap<String, Message> getMessageshash() {
@@ -66,7 +68,7 @@ public class MessageRequest {
             newUser.setIdRegisto(listUsers.size()+1);
             listUsers.put(newUser.getNickName(), newUser );
             System.out.println(" user " + newUser.getIdRegisto() + " Criado");
-            System.out.println(listUsers.size() + " lugares ocupados");
+            System.out.println(listUsers.size() + " utilizadores registados");
         } else {
             System.out.println("Já existe utilizador");
         }
@@ -80,15 +82,14 @@ public class MessageRequest {
                 newMessage.setMessage(message);
                 newMessage.setIDMessage(this.IDMensagem);
                 messageshash.put((String.valueOf(this.IDMensagem)), newMessage);
-                System.out.println("o hashMap tem " + messageshash.size() + " lugares ocupados");
+                System.out.println("o hashMap tem " + messageshash.size() + " mensagens enviadas");
                 IDMensagem += 1;
             } else {
                 System.out.println("Registe-se Primeiro");
-                // Colocar pop-up
             }
         }
-
     }
+        
 
     public String printMessages() {
         String result = "";
