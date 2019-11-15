@@ -52,7 +52,7 @@ public class MessageRequest extends JFrame {
         for (String name : listUsers.keySet()) {
             int key = listUsers.get(name).getIdRegisto();
             String value = listUsers.get(name).getNickName().toString();
-            result += "ID: " + key + " :: user: " + value;
+            result += "ID:     " + key + " :: user: " + value;
             result += "<br>";
         }
 
@@ -63,11 +63,13 @@ public class MessageRequest extends JFrame {
     // syncronized para não ser mais que uma thread a aceder ao código dentro desse
     // bloco
     public void saveUser(User newUser) {
-        if (!listUsers.containsValue(newUser)) {
+        String userNick = newUser.getNickName();
+        
+        if (!listUsers.containsKey(userNick)) {
             System.out.println("Não existe utilizador");
             newUser.setIdRegisto(listUsers.size()+1);
             listUsers.put(newUser.getNickName(), newUser );
-            System.out.println(" user " + newUser.getIdRegisto() + " Criado");
+            System.out.println(" user " + newUser.getIdRegisto() + "chamado" + newUser.getNickName() + " Criado");
             System.out.println(listUsers.size() + " utilizadores registados");
         } else {
             System.out.println("Já existe utilizador");

@@ -38,11 +38,13 @@ public class GetHttpRequestHandler extends Thread {
             StringBuilder builder = new StringBuilder();
             String line = msg;
             int length = 0;
+            //do while para apanhar o tamanho do content e atribuir ao lenght para ser usado no post.
             do {
                 System.out.println(line);
                 if (line.equals("")) {
                     break;
                 }
+                //serve para "apanhar" o tamanho da mensagem. 
                 if (line.contains("Content-Length")) {
                     int idx = line.indexOf(":");
                     length = Integer.parseInt(line.substring(idx + 2, line.length()));
@@ -54,33 +56,40 @@ public class GetHttpRequestHandler extends Thread {
             StringTokenizer tokens = new StringTokenizer(msg);
             String metodo = tokens.nextToken();
 
-            if (msg.equals("GET / HTTP/1.1")) {
+            if (metodo.equals("GET")) {
                 response = "101\n";
                 System.out.println("work");
                 System.out.println(response);
                 out.println("HTTP/1.1 200 OK");
                 out.println("Content-Type: text/html");
                 out.println("\r\n");
-                out.println("<!doctype html>\n" + "\n" + "<html lang=\"PT-pt\">\n" + "<head>\n"
-                        + "    <meta charset=\"utf-8\">\n" + "\n" + "    <title>Sistemas Distribuidos</title>\n" + "\n"
+                out.println("<!doctype html>\n" + "\n" + "<html lang=\"pt-pt\">\n" + "<head>\n"
+                        + "<meta charset=\"utf-8\">\n" + "\n" + "    <title>Sistemas Distribuidos</title>\n" + "\n"
                         + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
+
                         + "</head>\n" + "\n" + "<body>");
-                out.println("        </div>\n" + "<center> <br><h1><font face=Arial color= blue>SISTEMA DE RESPOSTA A AUDIENCIAS </font></h1> </div>\n" + "<div> <h3><font face=Arial> Grupo 1 - Sistemas Distribuidos 2019/2020</font></div><br>"
-                        +"    <div class=\"border\"rows=2 cols=\"10\">\n"
-                        + "        <div class=\"\">\n"
-                        + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                        + "       <br><h5> <br><br><br>Registe-se para poder enviar Mensagens!   </h5> </br>   <div class=\"card-body\">\n" +"<form method=\"post\" >\n"
-                        + "                NickName: <br> <input name=\"nome\" rows=\"1\"></input>\n" + "<br>\n"
-                        + "<br>\n"
-                        + "                <button type=\"submit\" value=\"mensagem\" class=\"btn btn-primary\">Submeter</button>\n"
-                        + "            </form>\n"+ "                </div>\n"
-                        + "            </div>\n" + "\n");
-               out.println("               <div class=\" col-10 \"rows=3 cols=\"2\">\n"
-                        + "                     <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                        + "                        <div class=\"card-body\">\n" + message.printMessages()
-                        + "                        </div>\n" 
-                        + "                     </div>\n" 
-                        + "</div>\n" + "\n"
+                out.println(
+                        "<div> <center> <br><h1><font face=Arial color= blue>SISTEMA DE RESPOSTA A AUDIENCIAS </font></h1>\n"
+                                + "   <div> <h3><font face=Arial> Grupo 1 - Sistemas Distribuidos 2019/2020</font></div><br>"
+                                + "      <div class=\"border\"rows=2 cols=\"10\">\n" + "        <div class=\"main\">\n"
+                                + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
+                                + "                 <br><h5> <br><br><br>Registe-se para poder enviar Mensagens!   </h5> </br>   "
+                                + "                 <div class=\"card-body\"> "
+                                + "                     <form method=\"post\" >\n"
+                                + "                         NickName: <br> <input name=\"nickname\" rows=\"1\"></input>\n"
+                                + "<br>\n" + "                         <br>\n"
+                                + "                         <button type=\"submit\" value=\"mensagem\" class=\"btn btn-primary\">Submeter</button>\n"
+                                + "                     </form>\n" + "                </div>\n" + "           </div>\n"
+                                + "\n");
+                out.println("<div class=\"row\">\n" + "  <div class=\"col-sm-4\">\n"
+
+                        + "      <div class=\"card-body\">\n"
+                        + "        <h5 class=\"card-title\">Utilizadores Registados</h5>\n"
+                        + "        <div id=\"setTime\" class=\"card-body\">\n" + message.printUsers() + "      </div>\n"
+                        + "    </div>\n" + "  </div>\n" + "  <div class=\"col-sm-8\">\n"
+                        + "      <div class=\"card-body\">\n" + "        <h5 class=\"card-title\">Mensagens</h5>\n"
+                        + "       <div id=\"setTime\" class=\"card-body\">\n" + message.printMessages()
+                        + "       </div>\n" + "    </div>\n" + "  </div>\n" + "</div>" + "</div>\n"
                         + "<script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>\n"
                         + "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js\" integrity=\"sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh\" crossorigin=\"anonymous\"></script>\n"
                         + "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js\" integrity=\"sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ\" crossorigin=\"anonymous\"></script>\n"
@@ -88,7 +97,7 @@ public class GetHttpRequestHandler extends Thread {
 
             }
 
-            else if (msg.equals("POST / HTTP/1.1")) {
+            else if (metodo.equals("POST")) {
 
                 char[] body = new char[length];
                 in.read(body, 0, length);
@@ -97,22 +106,23 @@ public class GetHttpRequestHandler extends Thread {
                 int index = submition.indexOf("&");
 
                 findNickName = submition.substring(0, submition.length());
-                int idn = findNickName.indexOf("=");
-                String nickname = findNickName.substring(idn + 1, findNickName.length());
+                int idx2 = findNickName.indexOf("=");
+                String nickname = findNickName.substring(idx2 + 1, findNickName.length());
 
                 if (submition.contains("nickname=") && submition.contains("mensagem=")) {
 
                     String findMessage = submition.substring(index, submition.length());
-                    int idm = findMessage.indexOf("=");
-                    String messageUser = findMessage.substring(idm + 1, findMessage.length());
-                    nickname = findNickName.substring(idn + 1, index);
+                    int idx3 = findMessage.indexOf("=");
+                    String messageUser;
+                    messageUser = findMessage.substring(idx3 + 1, findMessage.length());
+                    nickname = findNickName.substring(idx2 + 1, index);
                     User user1 = new User(nickname);
                     message.saveMessage(user1, messageUser);
                 } else if (!submition.contains("messagem=")) {
 
                     User user1 = new User(nickname);
                     message.saveUser(user1);
-                  
+
                 }
 
                 response = "101\n";
@@ -121,41 +131,38 @@ public class GetHttpRequestHandler extends Thread {
                 out.println("HTTP/1.1 200 OK");
                 out.println("Content-Type: text/html");
                 out.println("\r\n");
-                out.println("<!doctype html>\n" 
-                        + "\n" 
-                        + "<html lang=\"en\">\n" 
-                        + "<head>\n"
+                out.println("<!doctype html>\n" + "\n" + "<html lang=\"en\">\n" + "<head>\n"
                         + "    <meta charset=\"utf-8\">\n" + "\n" + "    <title>Chat</title>\n" + "\n"
+
                         + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
-                        + "</head>\n" 
-                        + "\n" 
-                        + "<body>"
-                        + " <div class=\"main\">\n"
-                        +           "NickNames Registados:\n"
-                        + "           <div class=\"row\">\n");
-                out.println("               <div class=\" col-4 \"rows=3 cols=\"2\">\n"
-                        + "                     <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                        + "                        <div class=\"card-body\">\n" + message.printMessages()
-                        + "                        </div>\n" 
-                        + "                     </div>\n" 
-                        + "                 </div>\n");
-                out.println("               <div class=\"col-4\"rows=3 cols=\"2\">\n"
-                        + "                        <div class=\"card-body\">\n" + message.printUsers()
-                        + "                        </div>\n"   
-                        + "                     </div>\n"
-                        + "          </div>\n");
-                out.println("             <br>\n" 
-                        + "<div class=\"form\">\n"
-                        + "           <div class=\"form-group\" >\n" + "            <form method=\"post\" >\n"
-                        + "                NickName: <br> <input disable name=\"nickname\" value=\"" + nickname
-                        + "\" rows=\"1\"></input>\n" + "<br>\n" + "                ID de Registo: \n" + "<br>\n"
-                        + "<label for=\"mensagem\">Tell us your story:</label>\n" + "<br>\n"
-                        + "                <textarea name=\"mensagem\" rows=\"2\"></textarea>\n" + "<br>\n"
-                        + "                <button type=\"submit\" value=\"mensagem\" class=\"btn btn-primary\">Submeter</button>\n"
-                        + "            </form>\n" + "        </div>\n" + "        </div>\n" + "    </div>\n"
-                        + "</div>\n" 
-                        + "<div >\n"
-                        + "\n"
+                        + "</head>\n" + "<body>\n");
+                out.println(
+                        "<div> <center> <br><h1><font face=Arial color= blue>SISTEMA DE RESPOSTA A AUDIENCIAS </font></h1>\n"
+                                + "   <div> <h3><font face=Arial> Grupo 1 - Sistemas Distribuidos 2019/2020</font></div><br>"
+                                + "      <div class=\"border\"rows=2 cols=\"10\">\n" + "        <div class=\"main\">\n"
+                                + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
+                                + "                 <br><h5> <br><br><br>Registe-se para poder enviar Mensagens!   </h5> </br>   "
+                                + "                 <div class=\"card-body\"> "
+                                + "                     <form method=\"post\" >\n"
+                                + "                         NickName: <br> <input name=\"nickname\" value=" + nickname
+                                + " rows=\"1\"></input>\n" + "<br>\n" + "                         <br>\n"
+                                + "                         <label for=\"mensagem\">Envie a sua mensagem:</label>\n"
+                                + "<br>\n"
+                                + "                         <textarea name=\"mensagem\" rows=\"2\"></textarea>\n"
+                                + "<br>\n"
+                                + "                         <button type=\"submit\" value=\"mensagem\" class=\"btn btn-primary\">Submeter</button>\n"
+                                + "                     </form>\n" + "                </div>\n" + "           </div>\n"
+                                + "\n");
+                out.println("<div class=\"row\">\n" + "  <div class=\"col-sm-4\">\n"
+
+                        + "      <div class=\"card-body\">\n"
+                        + "        <h5 class=\"card-title\">Utilizadores Registados</h5>\n"
+                        + "        <div id=\"setTime\" class=\"card-body\">\n" + message.printUsers() + "      </div>\n"
+                        + "    </div>\n" + "  </div>\n" + "  <div class=\"col-sm-8\">\n"
+                        + "      <div class=\"card-body\">\n" + "        <h5 class=\"card-title\">Mensagens</h5>\n"
+                        + "       <div id=\"setTime\" class=\"card-body\">\n" + message.printMessages()
+                        + "       </div>\n" + "    </div>\n" + "  </div>\n" + "</div>" + "</div>\n"
+
                         + "<script src=\"https://code.jquery.com/jquery-3.2.1.slim.min.js\" integrity=\"sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN\" crossorigin=\"anonymous\"></script>\n"
                         + "<script src=\"https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js\" integrity=\"sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh\" crossorigin=\"anonymous\"></script>\n"
                         + "<script src=\"https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js\" integrity=\"sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ\" crossorigin=\"anonymous\"></script>\n"
@@ -166,7 +173,7 @@ public class GetHttpRequestHandler extends Thread {
 
             }
 
-            // System.out.println("from client: " + builder);
+            System.out.println("from client: " + builder);
             // Write a sentence after reading.
             out.flush();
             in.close();
