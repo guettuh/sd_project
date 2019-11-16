@@ -4,6 +4,7 @@ package sd_project_grupo1;
 import java.io.*;
 import java.net.*;
 import java.util.*;
+import java.lang.*;
 
 public class GetHttpRequestHandler extends Thread {
     Socket connection;
@@ -50,9 +51,10 @@ public class GetHttpRequestHandler extends Thread {
                     length = Integer.parseInt(line.substring(idx + 2, line.length()));
                 }
                 builder.append(line);
-                line = in.readLine();
+                
             } while (true);
 
+            
             StringTokenizer tokens = new StringTokenizer(msg);
             String metodo = tokens.nextToken();
 
@@ -64,7 +66,8 @@ public class GetHttpRequestHandler extends Thread {
                 out.println("Content-Type: text/html");
                 out.println("\r\n");
                 out.println("<!doctype html>\n" + "\n" + "<html lang=\"pt-pt\">\n" + "<head>\n"
-                        + "<meta charset=\"utf-8\">\n" + "\n" + "    <title>Sistemas Distribuidos</title>\n" + "\n"
+                        + "<meta charset=\"utf-8\">\n" + "\n" +"<meta http-equiv=\"refresh\" content=\"30\">\n"
+                        + "    <title>Sistemas Distribuidos</title>\n" + "\n"
                         + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
 
                         + "</head>\n" + "\n" + "<body>");
@@ -116,12 +119,12 @@ public class GetHttpRequestHandler extends Thread {
                     String messageUser;
                     messageUser = findMessage.substring(idx3 + 1, findMessage.length());
                     nickname = findNickName.substring(idx2 + 1, index);
-                    User user1 = new User(nickname);
-                    message.saveMessage(user1, messageUser);
+                    user = new User(nickname);
+                    message.saveMessage(user, messageUser);
                 } else if (!submition.contains("messagem=")) {
 
-                    User user1 = new User(nickname);
-                    message.saveUser(user1);
+                    user = new User(nickname);
+                    message.saveUser(user);
 
                 }
 
@@ -132,8 +135,10 @@ public class GetHttpRequestHandler extends Thread {
                 out.println("Content-Type: text/html");
                 out.println("\r\n");
                 out.println("<!doctype html>\n" + "\n" + "<html lang=\"en\">\n" + "<head>\n"
-                        + "    <meta charset=\"utf-8\">\n" + "\n" + "    <title>Chat</title>\n" + "\n"
-
+                        + "    <meta charset=\"utf-8\">\n" + "\n"  
+                        + "    <title>Sistemas Distribuidos</title>\n" + "\n"
+                        + "    <meta charset=\"utf-8\">\n" + "\n" 
+                        + "    <meta http-equiv=\"refresh\" content=\"30\">\n" //atualiza a pagina a cada 30segundos
                         + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
                         + "</head>\n" + "<body>\n");
                 out.println(
@@ -141,11 +146,11 @@ public class GetHttpRequestHandler extends Thread {
                                 + "   <div> <h3><font face=Arial> Grupo 1 - Sistemas Distribuidos 2019/2020</font></div><br>"
                                 + "      <div class=\"border\"rows=2 cols=\"10\">\n" + "        <div class=\"main\">\n"
                                 + "            <div class=\"card mb-3\" style=\"min-height: 20rem;\">\n"
-                                + "                 <br><h5> <br><br><br>Registe-se para poder enviar Mensagens!   </h5> </br>   "
+                                + "                 <br><h5> <br><br><br>Comece já a falar, comece por uma Mensagem! :D   </h5> </br>   "
                                 + "                 <div class=\"card-body\"> "
                                 + "                     <form method=\"post\" >\n"
-                                + "                         NickName: <br> <input name=\"nickname\" value=" + nickname
-                                + " rows=\"1\"></input>\n" + "<br>\n" + "                         <br>\n"
+                                + "                         NickName: <br> <input disable name=\"nickname\" value=" + nickname
+                                + " rows=\"1\"></input>\n" + "O seu id é: "+user.getIdRegisto()+" <br>\n" + "                         <br>\n"
                                 + "                         <label for=\"mensagem\">Envie a sua mensagem:</label>\n"
                                 + "<br>\n"
                                 + "                         <textarea name=\"mensagem\" rows=\"2\"></textarea>\n"
@@ -185,6 +190,7 @@ public class GetHttpRequestHandler extends Thread {
             System.err.println("Ocorreu um erro na execução do servidor:" + e);
             System.exit(1);
         }
+}
     }
 
-}
+

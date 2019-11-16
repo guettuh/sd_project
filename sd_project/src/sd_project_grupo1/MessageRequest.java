@@ -69,7 +69,7 @@ public class MessageRequest extends JFrame {
             System.out.println("Não existe utilizador");
             newUser.setIdRegisto(listUsers.size()+1);
             listUsers.put(newUser.getNickName(), newUser );
-            System.out.println(" user " + newUser.getIdRegisto() + "chamado" + newUser.getNickName() + " Criado");
+            System.out.println(" user " + newUser.getIdRegisto() + " chamado " + newUser.getNickName() + " Criado");
             System.out.println(listUsers.size() + " utilizadores registados");
         } else {
             System.out.println("Já existe utilizador");
