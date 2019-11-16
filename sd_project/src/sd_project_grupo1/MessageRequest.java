@@ -11,14 +11,14 @@ import javax.swing.*;
 // chave ou como um valor.
 
 public class MessageRequest extends JFrame {
-    private static final HashMap<String, Message> messageshash = new HashMap<String, Message>();
+    private static final HashMap<String, Message> messagesHash = new HashMap<String, Message>();
     private static final HashMap<String, User> listUsers = new HashMap<String, User>();
     private static final int iDMessage = 1;
     private User users;
     private static String message;
 
-    public static HashMap<String, Message> getMessageshash() {
-        return messageshash;
+    public static HashMap<String, Message> getMessagesHash() {
+        return messagesHash;
     }
 
     public static HashMap<String, User> getListUsers() {
@@ -82,9 +82,8 @@ public class MessageRequest extends JFrame {
             if (listUsers.containsKey(userNick)) {
                 Message newMessage = new Message(user.getNickName());
                 newMessage.setMessage(message);
-                newMessage.setIDMessage(this.IDMensagem);
-                messageshash.put((String.valueOf(this.IDMensagem)), newMessage);
-                System.out.println("o hashMap tem " + messageshash.size() + " mensagens enviadas");
+                messagesHash.put((String.valueOf(this.IDMensagem)), newMessage);
+                System.out.println("o hashMap tem " + messagesHash.size() + " mensagens enviadas");
                 IDMensagem += 1;
             } else {
                 System.out.println("Registe-se Primeiro");
@@ -96,10 +95,10 @@ public class MessageRequest extends JFrame {
     public String printMessages() {
         String result = "";
 
-        for (String nickName : messageshash.keySet()) {
+        for (String nickName : messagesHash.keySet()) {
             String key = nickName.toString();
-            String user = messageshash.get(key).getNickName().toString();
-            String value = messageshash.get(key).getMessage().toString().replace("+", " ");
+            String user = messagesHash.get(key).getNickName().toString().replace("+", " ");
+            String value = messagesHash.get(key).getMessage().toString().replace("+", " ");
             result += user + " : " + value;
             result += "<br>";
         }
@@ -110,33 +109,18 @@ public class MessageRequest extends JFrame {
     class Message {
         private String nickName;
         private String message;
-        private int IDMessage;
 
-        public Message(String nickName, String message, int IDMessage) {
+        public Message(String nickName, String message) {
             this.nickName = nickName;
             this.message = message;
-            this.IDMessage = iDMessage;
         }
 
         public Message(String nickName) {
             this.nickName = nickName;
-            this.IDMessage = 0;
-        }
-
-        public Message() {
-            this.IDMessage = 0;
-        }
-
-        public int getIDMessage() {
-            return IDMessage;
         }
 
         public void setMessage(String message) {
             this.message = message;
-        }
-
-        public void setIDMessage(int IDMessage) {
-            this.IDMessage = IDMessage;
         }
 
         public String getNickName() {
