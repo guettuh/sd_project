@@ -31,7 +31,7 @@ public class Server implements Runnable {
             e.printStackTrace();
             System.exit(-1);
         }
-        System.out.println("Servidor Iniciado! Á escuta na porta " + port);
+        System.out.println("Servidor Iniciado! À escuta na porta " + port);
 
         // Aguarda que seja estabelecida uma conexão. QUando isso acontece cria um
         // socket - connection

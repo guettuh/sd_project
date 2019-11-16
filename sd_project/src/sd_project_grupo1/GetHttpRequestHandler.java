@@ -4,7 +4,6 @@ package sd_project_grupo1;
 import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.lang.*;
 
 public class GetHttpRequestHandler extends Thread {
     Socket connection;
@@ -51,6 +50,7 @@ public class GetHttpRequestHandler extends Thread {
                     length = Integer.parseInt(line.substring(idx + 2, line.length()));
                 }
                 builder.append(line);
+                line = in.readLine();
                 
             } while (true);
 
@@ -65,12 +65,16 @@ public class GetHttpRequestHandler extends Thread {
                 out.println("HTTP/1.1 200 OK");
                 out.println("Content-Type: text/html");
                 out.println("\r\n");
-                out.println("<!doctype html>\n" + "\n" + "<html lang=\"pt-pt\">\n" + "<head>\n"
-                        + "<meta charset=\"utf-8\">\n" + "\n" +"<meta http-equiv=\"refresh\" content=\"30\">\n"
+                out.println("<!doctype html>\n" + "\n" 
+                        + "<html lang=\"pt-pt\">\n" 
+                        
+                        + "<head>\n"
+                        + "<meta charset=\"utf-8\">\n" + "<meta http-equiv=\"refresh\" content=\"30\">\n" 
                         + "    <title>Sistemas Distribuidos</title>\n" + "\n"
                         + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
 
-                        + "</head>\n" + "\n" + "<body>");
+                        + "</head>\n" + "\n" 
+                        + "<body>");
                 out.println(
                         "<div> <center> <br><h1><font face=Arial color= blue>SISTEMA DE RESPOSTA A AUDIENCIAS </font></h1>\n"
                                 + "   <div> <h3><font face=Arial> Grupo 1 - Sistemas Distribuidos 2019/2020</font></div><br>"
@@ -134,11 +138,11 @@ public class GetHttpRequestHandler extends Thread {
                 out.println("HTTP/1.1 200 OK");
                 out.println("Content-Type: text/html");
                 out.println("\r\n");
-                out.println("<!doctype html>\n" + "\n" + "<html lang=\"en\">\n" + "<head>\n"
-                        + "    <meta charset=\"utf-8\">\n" + "\n"  
+                out.println("<!doctype html>\n" + "\n" + "<html lang=\"pt-pt\">\n" + "<head>\n"
+                        + "    <meta charset=\"utf-8\">\n" 
+                        + "    <meta http-equiv=\"refresh\" content=\"30\">\n"   
+                        //+ "    <meta http-equiv=\"refresh\" content=\"30\">\n" //atualiza a pagina a cada 30segundos
                         + "    <title>Sistemas Distribuidos</title>\n" + "\n"
-                        + "    <meta charset=\"utf-8\">\n" + "\n" 
-                        + "    <meta http-equiv=\"refresh\" content=\"30\">\n" //atualiza a pagina a cada 30segundos
                         + "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css\" crossorigin=\"anonymous\"/>\n"
                         + "</head>\n" + "<body>\n");
                 out.println(
