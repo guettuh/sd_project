@@ -8,7 +8,8 @@ import java.util.*;
 public class GetHttpRequestHandler extends Thread {
     Socket connection;
     MessageRequest message;
-    User user;
+    String nickname;
+    User user = new User(nickname);
     BufferedReader in;
     PrintWriter out;
     String findNickName = null;
@@ -33,12 +34,12 @@ public class GetHttpRequestHandler extends Thread {
                     + connection.getPort());
 
             String response;
-            // msg = message from Client
             String msg = in.readLine();
             StringBuilder builder = new StringBuilder();
             String line = msg;
             int length = 0;
-            //do while para apanhar o tamanho do content e atribuir ao lenght para ser usado no post.
+            //do while para imprimir o Cabeçalho (head) na consola
+            //apanha o valor do content-length e atribui ao lenght para ser usado posteriormente no post.
             do {
                 System.out.println(line);
                 if (line.equals("")) {
@@ -153,8 +154,9 @@ public class GetHttpRequestHandler extends Thread {
                                 + "                 <br><h5> <br><br><br>Comece já a falar, comece por uma Mensagem! :D   </h5> </br>   "
                                 + "                 <div class=\"card-body\"> "
                                 + "                     <form method=\"post\" >\n"
-                                + "                         NickName: <br> <input disable name=\"nickname\" value=" + nickname
-                                + " rows=\"1\"></input>\n" + "O seu id é: "+user.getIdRegisto()+" <br>\n" + "                         <br>\n"
+                                + "                         NickName: <br> <input disable name=\"nickname\" value=" + user.getNickName()
+                                + " rows=\"1\"></input>\n" + " <br>\n" 
+                                + "                         <br>\n"
                                 + "                         <label for=\"mensagem\">Envie a sua mensagem:</label>\n"
                                 + "<br>\n"
                                 + "                         <textarea name=\"mensagem\" rows=\"2\"></textarea>\n"
@@ -181,9 +183,10 @@ public class GetHttpRequestHandler extends Thread {
                 out.println("201:method not found");
 
             }
-
+            
+            // Imprime o builder criado no do while inicial, e imprime numa linha.
             System.out.println("from client: " + builder);
-            // Write a sentence after reading.
+            
             out.flush();
             in.close();
             out.close();

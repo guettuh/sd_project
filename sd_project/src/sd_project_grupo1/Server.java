@@ -33,8 +33,8 @@ public class Server implements Runnable {
         }
         System.out.println("Servidor Iniciado! À escuta na porta " + port);
 
-        // Aguarda que seja estabelecida uma conexão. QUando isso acontece cria um
-        // socket - connection
+        // Aguarda que seja estabelecida uma conexão. Quando isso acontece cria um
+        // socket - connection e o objeto message
         while (true) {
             try {
                 Socket connection = server.accept();
@@ -53,7 +53,7 @@ public class Server implements Runnable {
         int port = DEFAULT_PORT;
         MessageRequest message = new MessageRequest();
 
-        // Cria uma conexao para o cliente
+        // Cria uma coneçao para o cliente e cria a thread
         Server server = new Server(port, message);
         Thread thread = new Thread(server);
         thread.start();
