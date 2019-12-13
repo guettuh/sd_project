@@ -7,5 +7,4 @@ public interface NewGameInterface extends Remote {
 
     public void setNewGame(String nickname, String IPAddress) throws RemoteException;
 
-    
 }

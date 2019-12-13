@@ -10,5 +10,5 @@ package jogo_do_galo;
  * @author filipemanso
  */
 public class ClientApp {
-    
+
 }

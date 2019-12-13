@@ -7,5 +7,5 @@ import java.util.Vector;
 public interface GameInterface extends Remote {
 
     public Vector<String> getJogo(String IPAddress, NewGameInterface ng) throws RemoteException;
-    
+
 }
