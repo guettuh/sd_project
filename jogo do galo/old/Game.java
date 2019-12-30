@@ -16,7 +16,7 @@ public class Game extends UnicastRemoteObject implements GameInterface {
         super();
     }
 
-    Vector[] tabela;
+    Vector[] tabuleiro;
     String Jogador1;
     String Jogador2;
 
@@ -25,12 +25,12 @@ public class Game extends UnicastRemoteObject implements GameInterface {
         this.Jogador2 = Jogador2;
     }
 
-    public Vector[] getTabela() {
-        return tabela;
+    public Vector[] getTabuleiro() {
+        return tabuleiro;
     }
 
-    public void setTabela(Vector[] tabela) {
-        this.tabela = tabela;
+    public void setTabuleiro(Vector[] tabuleiro) {
+        this.tabuleiro = tabuleiro;
     }
 
     public Hashtable<String, NewGame> getPresentIPs() {
