@@ -1,6 +1,7 @@
 package jogo_do_galo;
 
 import java.io.*;
+import java.rmi.RemoteException;
 
 //objeto board, mantem o tracking do estado do jogo
 
@@ -30,6 +31,9 @@ public class JGboard implements Serializable
       winner = false;
    }
 
+   
+   
+   
    public char owner(int col, int row)
    {
       return owner[row][col];

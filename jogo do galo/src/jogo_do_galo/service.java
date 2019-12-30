@@ -11,4 +11,5 @@ public interface service extends Remote {
     public void reset()  throws RemoteException;
     // added so client can register self with server for callbacks
     public void register(ClientRemote newClient) throws RemoteException;
+    //public void printClients() throws RemoteException;
 }

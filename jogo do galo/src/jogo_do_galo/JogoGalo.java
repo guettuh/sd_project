@@ -1,10 +1,9 @@
 package jogo_do_galo;
 
 import java.rmi.*;
-import java.rmi.server.UnicastRemoteObject;
 import java.awt.*;
 import java.awt.event.*;
-import java.rmi.registry.LocateRegistry;
+import java.rmi.server.UnicastRemoteObject;
 import javax.swing.*;
 
 //frame que ilustra o acesso e atualização do jogo
@@ -17,8 +16,8 @@ public class JogoGalo extends JFrame implements ActionListener, ClientRemote
    protected service remoteJGBoard;
     String SERVICE_NAME="/PlayerRemote";
 // modify the following port number to 1099
-   public final static int ServicePort = 10000;
-   public final static String Server = "127.0.0.1";
+   public final static int ServicePort=10001;
+   
 
    public JogoGalo()
    {
@@ -33,15 +32,13 @@ public class JogoGalo extends JFrame implements ActionListener, ClientRemote
       try
       {
          System.out.println("Connecting...");
-         /*String serverObjectName = "rmi"
-            + serviceImpl.ServicePort + "/"
-            + serviceImpl.SERVICE_NAME;
-         remoteJGBoard = (service)Naming.lookup(serverObjectName);*/
-         remoteJGBoard= (service) LocateRegistry.getRegistry(Server, ServicePort).lookup(SERVICE_NAME);
+         String serverObjectName = "rmi://localhost" + SERVICE_NAME;
+         remoteJGBoard = (service)Naming.lookup(serverObjectName);
+         //remoteJGBoard= (service) LocateRegistry.getRegistry(Server, ServicePort).lookup(SERVICE_NAME);
          //
          // the next two lines allow the server to call updateBoard:
          //
-         UnicastRemoteObject.exportObject(this);
+         UnicastRemoteObject.exportObject(this, ServicePort);
          remoteJGBoard.register(this);
       }
       catch ( Exception e )
@@ -69,7 +66,11 @@ public class JogoGalo extends JFrame implements ActionListener, ClientRemote
       // set up the x's and o's
       JPanel xs_and_os = new JPanel();
       xs_and_os.setLayout(new GridLayout(3, 3, 5, 5));
-      box.add(xs_and_os);
+      
+      JPanel lista = new JPanel();
+      lista.setLayout(new GridLayout(9, 9, 9, 9));
+      
+      box.add(xs_and_os,lista);
 
       squares = new JButton[3][3];
       for(int row = 0; row < 3; ++row)
@@ -81,7 +82,7 @@ public class JogoGalo extends JFrame implements ActionListener, ClientRemote
             squares[row][col].addActionListener(this);
          }
       }
-
+      
       resetBoard();
       
       // resize frame
