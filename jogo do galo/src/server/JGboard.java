@@ -1,4 +1,4 @@
-package jogo_do_galo;
+package server;
 
 import java.io.*;
 import java.rmi.RemoteException;

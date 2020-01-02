@@ -1,39 +1,23 @@
-package jogo_do_galo;
+package server;
 
+import client.JogoGalo;
 import java.rmi.*;
 import java.rmi.server.*;
 import java.util.*;
+import client.ClientInterface;
 
-//implementação da interface service
+//implementação da interface ServiceInterface
 
-class serviceImpl extends UnicastRemoteObject implements service {
+class Service extends UnicastRemoteObject implements ServiceInterface {
 
    // the object being served up
    protected JGboard board = new JGboard();
    private long horarioInicio = System.currentTimeMillis();
    private long DURACAO_MAXIMA = 45 * 1000;
    private int jogadorDaVez = 1;
-   protected JogoGalo remoteBoard;
+   //protected JogoGalo remoteBoard;
 
-   public boolean isPronto() throws RemoteException {
-      return clients.size() == 2;
-   }
-
-   public boolean isPartidaEncerrada() throws RemoteException {
-      return board.winner() == 'X' || board.winner() == 'O' || ultrapassouTempo();
-   }
-
-   public boolean isMinhaVez(int i) throws RemoteException {
-      return i == jogadorDaVez;
-   }
-
-   public boolean ultrapassouTempo() throws RemoteException {
-      System.out.print("O tempo passado em milissegundos � ");
-      System.out.println(System.currentTimeMillis() - horarioInicio);
-      return (System.currentTimeMillis() - horarioInicio) >= DURACAO_MAXIMA;
-   }
-
-   public serviceImpl() throws RemoteException {
+   public Service() throws RemoteException {
       super();
    }
 
@@ -61,7 +45,7 @@ class serviceImpl extends UnicastRemoteObject implements service {
 
    public List clients = Collections.synchronizedList(new LinkedList());
 
-   public void register(ClientRemote newClient) throws RemoteException {
+   public void register(ClientInterface newClient) throws RemoteException {
       clients.add(newClient);
       System.out.println("Isto é uma impressão de novo cliente " + newClient);
    }
@@ -76,20 +60,20 @@ class serviceImpl extends UnicastRemoteObject implements service {
       return printAll;
    }
 
-   public void turnPlayer(){
+   /*public void turnPlayer(){
         if(clients.contains(1)){
           remoteBoard.setEnabled(true);
         }else if(clients.contains(1)){
           remoteBoard.setEnabled(true);
       }else{
          remoteBoard.setEnabled(false);}
-         }
+         }*/
 
 
    public void updateClients() {
       Iterator it = clients.iterator();
       while (it.hasNext()) {
-         ClientRemote client = (ClientRemote) it.next();
+         ClientInterface client = (ClientInterface) it.next();
          try {
             client.updateBoard(board);
          } catch (Exception e) {

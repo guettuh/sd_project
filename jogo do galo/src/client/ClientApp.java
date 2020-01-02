@@ -1,4 +1,4 @@
-package jogo_do_galo;
+package client;
 
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
@@ -7,17 +7,16 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.rmi.RemoteException;
 
-import jogo_do_galo.JogoGalo;
-import jogo_do_galo.serviceImpl;
 
 
-public class Arranque extends JFrame {
+
+public class ClientApp extends JFrame {
     
     String PLAYERSERVER;
     public String HOST;
     protected String SERVICE_PORT;
     
-    public Arranque() throws RemoteException, InterruptedException {
+    public ClientApp() throws RemoteException, InterruptedException {
         super("Jogo do Galo - Escolha o server!");
       setSize(650, 400);
 
@@ -44,7 +43,7 @@ public class Arranque extends JFrame {
    }
     
     public static void main(String[] args) throws RemoteException, InterruptedException {
-      Arranque ar = new Arranque();
+      ClientApp ar = new ClientApp();
       ar.setVisible(true);
       ar.setVisible(false);
    }

@@ -1,14 +1,17 @@
-package jogo_do_galo;
+package client;
 
 import java.rmi.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.rmi.server.UnicastRemoteObject;
 import javax.swing.*;
+import server.JGboard;
+import client.ClientInterface;
+import server.ServiceInterface;
 
 //frame que ilustra o acesso e atualização do jogo
 
-public class JogoGalo extends JFrame implements ActionListener, ClientRemote {
+public class JogoGalo extends JFrame implements ActionListener, ClientInterface {
    protected JButton[][] squares;
    protected JLabel statusLabel = new JLabel();
    protected JButton reset;
@@ -18,7 +21,7 @@ int meuId;
 JPanel squareFill;
 JPanel box;
    
-   protected service remoteJGBoard;
+   protected ServiceInterface remoteJGBoard;
    String SERVICE_NAME = "/PlayerRemote";
 
    // Alterar a porta
@@ -38,7 +41,7 @@ JPanel box;
          System.out.println("Connecting...");
          String serverObjectName = "rmi://" + HOST + "/" + PLAYERSERVER;
          System.out.println(serverObjectName);
-         remoteJGBoard = (service) Naming.lookup(serverObjectName);
+         remoteJGBoard = (ServiceInterface) Naming.lookup(serverObjectName);
 
          // serve para atualização do tabuleiros nos dois peers
          UnicastRemoteObject.exportObject(this, SERVICE_PORT);
